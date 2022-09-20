@@ -5,6 +5,7 @@ app = Flask(__name__)
 from pymongo import MongoClient
 
 import routes
+import login_api
 
 client = MongoClient('localhost', 27017)
 db = client.testdb
