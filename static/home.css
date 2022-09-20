@@ -2,6 +2,11 @@
   margin: 0;
   padding: 0;
   font-family: "Nanum Gothic Coding", monospace;
+  font-size: 14px;
+}
+
+body {
+  padding-bottom: 5%;
 }
 
 button {
@@ -9,7 +14,15 @@ button {
 }
 
 header {
-  margin-top: 50px;
+  position: fixed;
+  top: 0;
+  height: 150px;
+  padding-top: 50px;
+  width: 100%;
+  background-color: var(--white-100);
+}
+
+.header-contents {
   display: grid;
   grid-template-columns: 65% 1fr;
 }
@@ -52,19 +65,24 @@ main {
 }
 
 .left-area {
+  margin-top: 100px;
 }
 
 .feed {
-  margin-top: 20px;
+  margin-top: 80px;
 }
 
 .playlist-block {
-  margin-top: 70px;
+  margin-top: 50px;
 }
 
 .sort-tab-area {
+  position: fixed;
+  width: 45%;
   display: flex;
   justify-content: space-around;
+  background-color: var(--white-100);
+  padding-bottom: 50px;
 }
 
 .sort-by {
@@ -87,6 +105,7 @@ main {
 }
 
 .right-area {
+  position: relative;
   margin-left: 20%;
   display: flex;
   justify-content: flex-end;
@@ -96,12 +115,20 @@ main {
   margin-bottom: 15px;
 }
 
+.title-center {
+  text-align: center;
+}
+
 .popular-songs-area {
-  min-width: 300px;
-  padding: 5%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 250px;
+  margin-right: 15%;
+  padding: 1%;
+  max-width: 300px;
   border: solid 1px var(--gray-300);
   border-radius: 4px;
-  min-height: 70px;
-  overflow-y: scroll;
+  min-height: 100px;
   word-wrap: break-word;
 }
