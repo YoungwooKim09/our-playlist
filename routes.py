@@ -38,10 +38,9 @@ def home():
 @app.route('/list/all', methods=['GET'])
 def listAllplaylists():
     page = request.args.get('page')
-    
     if  page != None:
-        #  TODO: DB 특정 개수 조회 
-        foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1)).limit(page)
+        page = int(page) 
+        foundElements = list(db.playlists.find({}, {'_id': 0}).skip((int(page) - 1) * 10).limit(10))
         return jsonify ({'result': 'success', 'all_playlists': foundElements})
     else:
         foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))

@@ -4,11 +4,11 @@ $(document).ready(function () {
 });
 
 function showAllplaylists(page) {
+  console.log("currentpage : ", page);
   $.ajax({
     type: "GET",
     url: `/list/all`,
     data: { page: page },
-    data: {},
     success: function (response) {
       if (response["result"] == "success") {
         all_playlists = response["all_playlists"];
