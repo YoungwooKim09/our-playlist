@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nanum Gothic Coding", monospace;
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 65% 1fr;
+}
+
+.page-title-area {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.button-area {
+  display: flex;
+  justify-content: center;
+}
+
+.home-button-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  width: 80px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  /* border: solid 2px black; */
+  border-radius: 6px;
+  color: var(--white-100);
+}
+
+main {
+  margin-top: 50px;
+  padding: 0 20%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.left-area {
+}
+
+.feed {
+  margin-top: 20px;
+}
+
+.playlist-block {
+  margin-top: 70px;
+}
+
+.sort-tab-area {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sort-by {
+  width: 100%;
+  padding: 3px;
+  border-radius: 4px;
+  background-color: var(--white-100);
+  color: var(--black-100);
+  display: flex;
+  justify-content: center;
+  border: solid 1px var(--black-100);
+}
+
+.selected-sort-by {
+  background-color: var(--black-100);
+  color: var(--white-100);
+  display: flex;
+  justify-content: center;
+  border: none;
+}
+
+.right-area {
+  margin-left: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.area-title {
+  margin-bottom: 15px;
+}
+
+.popular-songs-area {
+  min-width: 300px;
+  padding: 5%;
+  border: solid 1px var(--gray-300);
+  border-radius: 4px;
+  min-height: 70px;
+  overflow-y: scroll;
+  word-wrap: break-word;
+}
