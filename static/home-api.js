@@ -1,6 +1,16 @@
+let page = 1;
+
 $(document).ready(function () {
   $(".feed").html("");
-  showAllplaylists(1);
+  showAllplaylists(page);
+});
+
+$(window).scroll(function () {
+  var scrolltop = $(window).scrollTop();
+  if (scrolltop == $(document).height() - $(window).height()) {
+    console.log("맨끝 도착");
+    showAllplaylists(++page);
+  }
 });
 
 function showAllplaylists(page) {
