@@ -140,6 +140,67 @@
     </secion>
   </main>
   <script type="text/javascript" src="/static/home.js"></script>
+  <script>
+
+    $(document).ready(function () {
+      $("#list-box").html("");
+      showAllplaylists();
+    });
+
+    function showAllplaylists() {
+      $.ajax({
+        type: "GET",
+        url: "/list/all",
+        data: {},
+        success: function (response) {
+          if (response["result"] == "success") {
+
+            console.log(list_a);
+            
+            for (let i = 0; i < list_a.length; i++) {
+              makeCard(list_a[i]["song_number"], list_a[i]["song_name"]);
+            }
+          }
+        }
+      })
+    }
+
+    function makeList(song_number, song_name) {
+      let tempHtml = `<div class="card">
+                        <img class="card-img-top" src="${any}" alt="Card image cap">
+                        <div class="card-body">
+                        <a href="${any}" target="_blank" class="card-title">${any}</a>
+                        <p class="card-text">${any}</p>
+                        <p class="card-text comment">${any}</p>
+                        </div>
+                    </div>`;
+      $("#cards-box").append(tempHtml);
+
+    }
+
+    function addPlaylist() {
+      let user = $("#add-user").val();
+      let title = $("#add-playlist").val();
+
+      
+      $.ajax({
+        type: "POST", 
+        url: "/add/playlist", 
+        data: { user_give: user, title_give: title }, 
+        success: function (response) { // 성공하면
+          if (response["result"] == "success") {
+            alert("포스팅 성공!");
+            // 3. 성공 시 페이지 새로고침하기
+            window.location.reload();
+          } else {
+            alert("다시 입력하세요!")
+          }
+        }
+      })
+    }
+
+
+  </script>
 </body>
 
 </html>
