@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, jsonify, request 
 from __main__ import app
 import requests
@@ -8,24 +7,27 @@ import datetime
 
 client = MongoClient('localhost', 27017)
 db = client.testdb
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
+
 @app.route('/list/all', methods=['GET'])
 def listAllplaylists():
 
-    result = list(db.playlists.find({}, {'_id': 0}))
+    result = list(db.playlists.find({}, {'_id': 0}).sort('time_receive', -1))
     
-    return jsonify ()
+    return jsonify ({'result': 'success', 'all_playlists': result})
+
 
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
 
     user_receive = request.form['user_give']
     title_receive = request.form['title_give']
-    songs = {}
-    playlist = {'user': user_receive, 'title': title_receive, 'songs': songs, 'time_receive' : 0}
+    song_receive = []
+    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'time_receive' : 0}
 
     db.playlists.insert_one(playlist)
 
@@ -38,11 +40,11 @@ def addSong():
     artist_receive = request.form['artist_give']
     time_receive = datetime.datetime.utcnow()
 
-    songs = {'songname' : song_receive, 'singer' : artist_receive}
-    playlists = playlists.append(songs)
+    addSong = {'songname': song_receive, 'artist': artist_receive}
+    playlists = playlists['songs'].append(addSong)
     # time_receive 업데이트
     # songs 딕셔너리 추가
-    
+    db.playlists.update_one({'user': 'user_receive'},{'$set':{'time':time_receive}})
 
 
 @app.route('/search', methods=['POST'])
@@ -57,9 +59,12 @@ def searchList():
     soup = BeautifulSoup(data.text, 'html.parser')
 
     search_song_list = soup.select('#frm_searchSong tbody > tr > td.t_left div.ellipsis > a.fc_gray')
+    search_artist_list = soup.select('#artistName > a')
+
     search_song_name = list(search_song_list.text)
+    search_song_artist = list(search_artist_list.text)
 
     return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
