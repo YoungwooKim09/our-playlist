@@ -7,10 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <title>우플리-로그인</title>
+    	
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <title>우플리-회원가입</title>
   </head>
   <body>
-    <form class="login-box" style="font-family: 'Nanum Gothic', sans-serif;">
+    <form class="sign-in-box" style="font-family: 'Nanum Gothic', sans-serif;">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -20,12 +22,17 @@
           <label for="exampleInputPassword1" class="form-label">Password</label>
           <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">이름</label>
+            <input class="form-control" id="exampleInputPassword1">
+          </div>
+        
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
-        <a href="/sign_up"><button type="button" class="btn btn-primary">회원가입</button></a>
+        <button class="btn btn-primary">회원가입</button>
       </form>
   </body>
 </html>
