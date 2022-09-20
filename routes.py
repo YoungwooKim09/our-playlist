@@ -8,6 +8,25 @@ import datetime
 client = MongoClient('localhost', 27017)
 db = client.testdb
 
+db.playlists.insert_one({
+    'user':'youngwoo',
+    'title': 'playlist A',
+    'songs':[{'songname':'새삥 (Prod. ZICO) (Feat. 호미들)', 'artist':'지코 (ZICO)'},
+    {'songname':'After LIKE ', 'artist':'IVE'},
+    {'songname':'Attention', 'artist':'NewJeans'}
+    ]})
+
+    
+db.playlists.insert_one({
+    'user':'suyeon',
+    'title': '힙합 플레이리스트!',
+    'songs':[
+    {'songname':'가가가', 'artist':'나나나'}, 
+    {'songname':'asdf', 'artist':'efef'}, 
+    {'songname':'jklkj', 'artist':'seffew'}
+    ]})
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -16,8 +35,8 @@ def home():
 @app.route('/list/all', methods=['GET'])
 def listAllplaylists():
 
-    result = list(db.playlists.find({}, {'_id': 0}).sort('time_receive', -1))
-    
+    result = list(db.playlists.find({}, {'_id': 0}))
+    print(result)
     return jsonify ({'result': 'success', 'all_playlists': result})
 
 
@@ -65,6 +84,3 @@ def searchList():
     search_song_artist = list(search_artist_list.text)
 
     return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
-
-if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
