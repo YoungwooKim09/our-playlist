@@ -1,12 +1,13 @@
 $(document).ready(function () {
   $(".feed").html("");
-  showAllplaylists();
+  showAllplaylists(1);
 });
 
-function showAllplaylists() {
+function showAllplaylists(page) {
   $.ajax({
     type: "GET",
-    url: "/list/all",
+    url: `/list/all`,
+    data: { page: page },
     data: {},
     success: function (response) {
       if (response["result"] == "success") {
