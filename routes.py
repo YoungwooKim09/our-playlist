@@ -1,12 +1,13 @@
-from flask import render_template, jsonify, request 
-from __main__ import app
 
+from flask import Flask, render_template, jsonify, request 
+from __main__ import app
 import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
-
 import datetime
 
+client = MongoClient('localhost', 27017)
+db = client.testdb
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -59,3 +60,6 @@ def searchList():
     search_song_name = list(search_song_list.text)
 
     return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5001, debug=True)
