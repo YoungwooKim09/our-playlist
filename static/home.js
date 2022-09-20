@@ -1,6 +1,7 @@
 const sortTabArea = document.querySelector(".sort-tab-area");
 const sortByTime = document.querySelector(".by-time");
 const sortByRandom = document.querySelector(".by-random");
+const loginButton = document.querySelector(".home-button-login");
 
 let currentSelectedSortBy = "time";
 sortByTime.addEventListener(
