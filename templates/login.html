@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <title>우플리-로그인</title>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script>
+  <script type="text/javascript" src="/static/data.js"></script>
 
   </script>
   <style>
@@ -103,22 +103,17 @@
           if (response['result'] == 'success') {
             alert(response['msg'])
             if(response['token']){
-              createCookie(response['token'])
+              createCookie(response['token']);
+              user_info = response['info']
+              console.log(user_info)
+              location.replace('/');
             }
           }
           else {
             alert('server-connection-fail');
           }
         }
-      }).done($.ajax(
-        {
-          type: "GET",
-          url: '/login',
-          success : function(response) {
-            response;
-          }
-        }
-      ))
+      })
     }
   </script>
 </head>
@@ -179,5 +174,7 @@
     </div>
   </div>
 </body>
-
+<script>
+  
+</script>
 </html>

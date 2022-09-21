@@ -70,7 +70,8 @@ def api_login():
         }
         print(payload['exp'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        return jsonify({'result' : 'success', 'msg' : result['name'] + '님 환영합니다.', 'token' : token})
+        user_info = {'name' : result['name'], 'id' : result['id']}
+        return jsonify({'result' : 'success', 'msg' : result['name'] + '님 환영합니다.','token' : token, 'info' : user_info})
     else:
         return jsonify({'result' : 'success', 'msg' : "아이디/비밀번호가 일치하지 않습니다."})
 
