@@ -73,16 +73,16 @@ function openModal(id, title) {
   modalArea.classList.remove("hide");
   modalTitle.textContent = title;
 
-  const deleteSongsButtons = document.querySelectorAll(".delete-song-button");
+  return id;
+}
 
-  for (let i = 0; i < deleteSongsButtons?.length; ++i) {
-    deleteSongsButtons[i].addEventListener("click", function () {
-      const order = i + 1;
-      const item = document.querySelector(`.delete-song-button-${order}`);
-      const id = item.getAttribute("button-id");
-      deletePlaylist(id);
-    });
+const deleteSongsButtons = document.querySelectorAll(".delete-song-button");
 
-    return id;
-  }
+for (let i = 0; i < deleteSongsButtons?.length; ++i) {
+  deleteSongsButtons[i].addEventListener("click", function () {
+    const order = i + 1;
+    const item = document.querySelector(`.delete-song-button-${order}`);
+    const id = item.getAttribute("button-id");
+    deletePlaylist(id);
+  });
 }
