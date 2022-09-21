@@ -47,18 +47,21 @@
           </form>
         </div>
       </div>
-      <ul class="feed">
+      <ul class="my-playlist-feed">
         <!-- 나의 플레이리스트 조회 API 추가 -->
         {% for item in playlists %}
-        <li>
+        <li class="my-playlist-item">
           <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
-            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.user}}</p>
+            <p class="area-title area-title {{ loop.index }}">{{item.title}}</p>
             <ul class="songs-{{loop.index}}">
               {% for song in item.songs %}
               <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}
                 {% endfor %}
             </ul>
           </div>
+          <button class="btn btn-primary ml-6">추가</button>
+          <button class="btn btn-danger ml-6">삭제 </button>
+
         </li>
         {% endfor %}
       </ul>
@@ -66,9 +69,9 @@
     <secion class="right-area">
       <div class="popular-songs-area">
         <p class="area-title title-center">가장 많이 담긴 곡</p>
-        <div id = "popular-list">
+        <div id="popular-list">
           <input id="search-song" placeholder="노래제목을 입력하세요.">
-          <button onclick="searchSong()" type="submit">검색</button> 
+          <button onclick="searchSong()" type="submit">검색</button>
         </div>
       </div>
     </secion>
