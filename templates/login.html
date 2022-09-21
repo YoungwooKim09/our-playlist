@@ -91,7 +91,7 @@
       })
     }
     function createCookie(resToken, resUserInfo) {
-      document.cookie = resToken
+      document.cookie = `token=${resToken}`
       document.cookie = `userinfo = ${JSON.stringify(resUserInfo)}`
     }
     function log_in() {
