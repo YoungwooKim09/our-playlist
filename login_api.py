@@ -1,6 +1,7 @@
 from __main__ import app
 from datetime import datetime, timedelta
 from functools import wraps
+from os import access
 from xmlrpc.client import ResponseError
 from flask import render_template, jsonify, request, redirect, url_for, Response, current_app
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
@@ -33,10 +34,17 @@ def check_access_token(access_token):
 def login_confirm(f):
     @wraps(f)
     def deco_func(*args, **kwagrs):
-        access_token = request.headers.get('Cookie')
+        cook = request.headers.get('Cookie')
+        access_token = ''
         # print(access_token)
-        if access_token is not None:
-            payload = check_access_token(access_token.split("; ")[1])
+        if cook is not None:
+            token_splited = cook.split("; ")
+            if token_splited[0].split('=')[0] == 'userinfo':
+                access_token = token_splited[1]
+            else:
+                access_token = token_splited[0]
+
+            payload = access_token
             if payload is None:
                 return render_template('login.html')
         else:
