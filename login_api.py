@@ -35,12 +35,12 @@ def login_confirm(f):
     def deco_func(*args, **kwagrs):
         access_token = request.headers.get('Cookie')
         # print(access_token)
-        # if access_token is not None:
-        #     payload = check_access_token(access_token)
-        #     if payload is None:
-        #         return render_template('login.html')
-        # else:
-        #     return render_template('login.html')
+        if access_token is not None:
+            payload = check_access_token(access_token)
+            if payload is None:
+                return render_template('login.html')
+        else:
+            return render_template('login.html')
         return f(*args, **kwagrs)
     return deco_func
 
