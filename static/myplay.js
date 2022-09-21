@@ -51,7 +51,7 @@ function keyPress(event) {
 }
 
 const addSongButtons = document.querySelectorAll(".add-song-button");
-console.log(addSongButtons);
+
 for (let i = 0; i < addSongButtons?.length; ++i) {
   addSongButtons[i].addEventListener("click", function () {
     const order = i + 1;
@@ -63,4 +63,15 @@ for (let i = 0; i < addSongButtons?.length; ++i) {
 
 function openModal(id) {
   console.log("플레이리스트 id", id);
+}
+
+const deleteSongsButtons = document.querySelectorAll(".delete-song-button");
+
+for (let i = 0; i < deleteSongsButtons?.length; ++i) {
+  deleteSongsButtons[i].addEventListener("click", function () {
+    const order = i + 1;
+    const item = document.querySelector(`.delete-song-button-${order}`);
+    const id = item.getAttribute("button-id");
+    deletePlaylist(id);
+  });
 }

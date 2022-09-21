@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 import datetime
+from bson.objectid import ObjectId
 
 client = MongoClient('localhost', 27017)
 db = client.testdb
@@ -53,8 +54,9 @@ def listMyplaylist():
 @app.route('/delete/playlist', methods=['POST'])
 def deletePlaylist():
 
-    delete_receive = request.form['delete_give']
-    db.playlists.delete_one({'title': delete_receive})
+    id = ObjectId(request.form['id'])
+    print(id)
+    db.playlists.delete_one({'_id': id})
 
     return jsonify ({'result': 'success'})
 

@@ -1,10 +1,10 @@
-function deletePlaylist(index) {
-  let delete_title = $(".area-title" + index).text();
+function deletePlaylist(id) {
+  // let delete_title = $(".area-title" + index).text();
 
   $.ajax({
     type: "POST",
     url: "/delete/playlist",
-    data: { delete_give: delete_title },
+    data: { id: id },
     success: function (response) {
       if (response["result"] == "success") {
         alert("플레이 리스트 삭제 완료!");
@@ -16,9 +16,8 @@ function deletePlaylist(index) {
   });
 }
 
-function searchSong(id) {
+function searchSong() {
   let search_song = $("#input-search").val();
-  let playlist_id = id
 
   $.ajax({
     type: "POST",
@@ -30,9 +29,9 @@ function searchSong(id) {
         searchList = response["song"];
         for (let i = 0; i < searchList.length; i++) {
           makeSearchList(
+            i + 1,
             searchList[i]["song_name"],
-            searchList[i]["song_singer"],
-            playlist_id
+            searchList[i]["song_singer"]
           );
         }
       }
@@ -40,21 +39,17 @@ function searchSong(id) {
   });
 }
 
-function makeSearchList(songName, songArtist, playlist_id) {
-  let tempHtml = `<li><span id="add-song">${songName}</span>
-  <span> - </span>
-  <span id="add-artist">${songArtist}</span>
-  <button onclick="addSong(${songName},${songArtist},${playlist_id})">추가</button>
-  </li>`
+function makeSearchList(songName, songArtist) {
+  let tempHtml = `<li>${songName} - ${songArtist}</li>`;
   $(".search-result").append(tempHtml);
 }
 
 // 버튼 추가하여 연결
 
-function addSong(songName, songArtist, playlist_title) {
-  let song = songName;
-  let artist = songArtist;
-  let title = playlist_title;
+function addSong() {
+  let song = $("#add-song").text();
+  let artist = $("#add-artist").text();
+  let title = $("#add-title").text();
   // 버튼에 해당하는 텍스트 요소
   // 함수 인자로 id값 사용
 
