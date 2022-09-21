@@ -21,6 +21,7 @@ savePlaylistButton.addEventListener("click", savePlayList);
 function savePlayList() {
   const dummyUser = "me";
   const title = playlistTitleInput.value;
+  if (!title) return;
   addPlaylist(title, dummyUser);
 }
 
