@@ -37,7 +37,6 @@ function showAllplaylists(page) {
 }
 
 function showPopularlist() {
-  
   $.ajax({
     type: "GET",
     url: "/list/popular",
@@ -55,11 +54,10 @@ function showPopularlist() {
   });
 }
 
-
 function makeList(index, user, title, songs) {
-  let tempHtml_pl = `<div class="playlist-block">
+  let tempHtml_pl = `<div class="playlist-block playlist-block${index}">
                         <p class="area-title${index}">${title} by ${user}</p>
-                        <button>펼쳐보기</button>
+                        
                     </div>`;
   $(".feed").append(tempHtml_pl);
 
@@ -67,10 +65,30 @@ function makeList(index, user, title, songs) {
     let song_name = songs[j]["songname"];
     let song_artist = songs[j]["artist"];
 
-    let tempHtml_s = `<p>1. ${song_name} - ${song_artist}</p>`;
+    let tempHtml_s = `<p>${j + 1}. ${song_name} - ${song_artist}</p>`;
 
-    $(`.area-title${index}`).append(tempHtml_s);
+    $(`.playlist-block${index}`).append(tempHtml_s);
   }
+  let spreadButtonHtml = `<button class="spread__button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
+  $(`.playlist-block${index}`).append(spreadButtonHtml);
+
+  const toggleSpreadButton = (function () {
+    let spread = false;
+
+    return function () {
+      spread = !spread;
+      if (spread) {
+        spreadButton.innerHTML = `<i class="fa-solid fa-caret-down"></i> 접기`;
+        // li.append(bottomArea);
+      } else {
+        spreadButton.innerHTML = `<i class="fa-solid fa-caret-right"></i> 펼쳐보기`;
+        // li.removeChild(bottomArea);
+      }
+    };
+  })();
+
+  let spreadButton = document.querySelector(`.spread__button${index}`);
+  spreadButton.addEventListener("click", toggleSpreadButton.bind(null, index));
 }
 
 function addPlaylist() {
@@ -82,10 +100,9 @@ function addPlaylist() {
     url: "/add/playlist",
     data: { user_give: user, title_give: title },
     success: function (response) {
-      
       if (response["result"] == "success") {
         alert("플레이 리스트 만들기 성공!");
-        
+
         window.location.reload();
       } else {
         alert("다시 입력하세요!");
