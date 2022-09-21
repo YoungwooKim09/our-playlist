@@ -5,6 +5,10 @@
   font-size: 14px;
 }
 
+input {
+  outline: none;
+}
+
 body {
   width: 100vw;
   height: 100vh;

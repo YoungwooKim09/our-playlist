@@ -83,3 +83,31 @@ button.save-playlist {
 .save-playlist {
   margin-left: 290px;
 }
+
+.modal-area {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 17px 12px;
+  margin-top: 200px;
+  margin-right: 20%;
+  min-width: 250px;
+  min-height: 120px;
+  border: solid 1px var(--gray-300);
+  border-radius: 4px;
+}
+
+#input-search {
+  border: solid 1px var(--gray-300);
+  border-radius: 4px;
+  padding: 4px;
+  margin-top: 10px;
+  width: 200px;
+}
+
+button.search-song-button {
+  background-color: var(--black-100);
+  color: var(--white-100);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
