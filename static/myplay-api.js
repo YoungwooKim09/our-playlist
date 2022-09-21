@@ -19,7 +19,6 @@ function deletePlaylist(index) {
 function searchSong() {
   let search_song = $("#input-search").val();
 
-
   $.ajax({
     type: "POST",
     url: "/search",
@@ -41,8 +40,8 @@ function searchSong() {
 }
 
 function makeSearchList(songName, songArtist) {
-  let tempHtml = `<li>${songName} - ${songArtist}</li>`
-    $(".search-result").append(tempHtml);
+  let tempHtml = `<li>${songName} - ${songArtist}</li>`;
+  $(".search-result").append(tempHtml);
 }
 
 // 버튼 추가하여 연결
@@ -79,17 +78,19 @@ function deleteSong() {
   $.ajax({
     type: "POST",
     url: "/delete/song",
-    data: { title_give: title, song_give: delete_song_name, artist_give: delete_song_artist},
+    data: {
+      title_give: title,
+      song_give: delete_song_name,
+      artist_give: delete_song_artist,
+    },
     success: function (response) {
-      
       if (response["result"] == "success") {
-        alert("노래 삭제 성공!")
+        alert("노래 삭제 성공!");
         window.location.reload();
       }
     },
   });
 }
-
 
 function addPlaylist(title, user) {
   console.log("add playlist 호출");
@@ -100,6 +101,7 @@ function addPlaylist(title, user) {
     success: function (response) {
       // 성공하면
       if (response["result"] == "success") {
+        location.reload();
         alert("포스팅 성공!");
         // 3. 성공 시 페이지 새로고침하기
         // window.location.reload();
