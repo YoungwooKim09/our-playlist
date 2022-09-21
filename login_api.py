@@ -33,7 +33,7 @@ def check_access_token(access_token):
 def login_confirm(f):
     @wraps(f)
     def deco_func(*args, **kwagrs):
-        access_token = request.headers.get('Cookie')
+        access_token = request.headers.get('Cookie').split("; ")[1]
         # print(access_token)
         if access_token is not None:
             payload = check_access_token(access_token)
