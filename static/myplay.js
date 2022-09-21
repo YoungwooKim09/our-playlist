@@ -51,18 +51,25 @@ function keyPress(event) {
 }
 
 const addSongButtons = document.querySelectorAll(".add-song-button");
-
+console.log(addSongButtons);
 for (let i = 0; i < addSongButtons?.length; ++i) {
   addSongButtons[i].addEventListener("click", function () {
     const order = i + 1;
     const item = document.querySelector(`.add-song-button-${order}`);
     const id = item.getAttribute("button-id");
-    openModal(id);
+    const title = item.getAttribute("playlist-title");
+    openModal(id, title);
   });
 }
 
-function openModal(id) {
+const modalArea = document.querySelector(".modal-area");
+const modalTitle = document.querySelector(".modal-area-title");
+
+function openModal(id, title) {
   console.log("플레이리스트 id", id);
+
+  modalArea.classList.remove("hide");
+  modalTitle.textContent = title;
 }
 
 const deleteSongsButtons = document.querySelectorAll(".delete-song-button");
