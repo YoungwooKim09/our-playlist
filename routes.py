@@ -18,7 +18,9 @@ for number in range(101):
         'title': title,
         'songs':[{'songname':'새삥 (Prod. ZICO) (Feat. 호미들)', 'artist':'지코 (ZICO)'},
         {'songname':'After LIKE ', 'artist':'IVE'},
-        {'songname':'Attention', 'artist':'NewJeans'}
+        {'songname':'Attention', 'artist':'NewJeans'},
+        {'songname':'11', 'artist':'111'},
+        {'songname':'22', 'artist':'222'}
         ]})
 
 # db.playlists.insert_one({

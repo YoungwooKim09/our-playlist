@@ -63,7 +63,8 @@ function makeList(index, user, title, songs) {
                     </li>`;
   $(".feed").append(tempHtml_pl);
 
-  for (let j = 0; j < songs?.length; j++) {
+  if (!songs || songs.length === 0) return;
+  for (let j = 0; j < 3; j++) {
     let song_name = songs[j]["songname"];
     let song_artist = songs[j]["artist"];
 
@@ -76,21 +77,41 @@ function makeList(index, user, title, songs) {
 
   const toggleSpreadButton = (function () {
     let spread = false;
-
+    let showCount = 3;
     return function () {
       spread = !spread;
       if (spread) {
         spreadButton.innerHTML = `<i class="fa-solid fa-caret-down"></i> 접기`;
-        // li.append(bottomArea);
+        showCount = songs.length;
+        toggle("fold", "spread", showCount);
       } else {
         spreadButton.innerHTML = `<i class="fa-solid fa-caret-right"></i> 펼쳐보기`;
-        // li.removeChild(bottomArea);
+        showCount = 3;
+        toggle("spread", "fold", showCount);
       }
     };
   })();
 
   let spreadButton = document.querySelector(`.spread__button${index}`);
   spreadButton.addEventListener("click", toggleSpreadButton.bind(null, index));
+
+  function toggle(currentState, nextState, showCount) {
+    let start;
+    if (currentState === "fold" && nextState === "spread") {
+      start = 3;
+    } else if (currentState === "spread" && nextState === "fold") {
+      start = 0;
+      $(`.songs${index}`).html("");
+    }
+
+    for (let j = start; j < showCount; j++) {
+      let song_name = songs[j]["songname"];
+      let song_artist = songs[j]["artist"];
+      let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
+
+      $(`.songs${index}`).append(tempHtml_s);
+    }
+  }
 }
 
 function addPlaylist() {
