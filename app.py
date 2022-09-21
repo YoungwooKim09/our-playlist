@@ -5,6 +5,7 @@ from pymongo import MongoClient
 
 import login_api
 import routes
+import my_playlist_api
 
 client = MongoClient('localhost', 27017)
 db = client.testdb

@@ -7,10 +7,14 @@ import hashlib
 from pymongo import MongoClient
 import time
 import jwt
+import my_playlist_api
+
 client = MongoClient('localhost', 27017)
 db = client.accountdb
 logined = False
 SECRET_KEY = 'WOOPLY'
+
+user_id = ''
 
 def check_access_token(access_token):
     print('check_token', access_token)
@@ -31,12 +35,12 @@ def login_confirm(f):
         access_token = request.headers.get('Cookie')
         print(type(access_token))
         
-        # if access_token is not None:
-        #     payload = check_access_token(access_token.split('; ')[0].split('token=')[1])
-        #     if payload is None:
-        #         return render_template('login.html')
-        # else:
-        #     return render_template('login.html')
+        if access_token is not None:
+            payload = check_access_token(access_token.split('; ')[0].split('token=')[1])
+            if payload is None:
+                return render_template('login.html')
+        else:
+            return render_template('login.html')
         return f(*args, **kwagrs)
     return deco_func
 
@@ -50,10 +54,19 @@ def login_confirm(f):
 def api_():
     return redirect(url_for('home'))
 
-@app.route('/my-playlist')
+# @app.route('/my-playlist',  methods=['GET', 'POST'])
 @login_confirm
 def playlist():
-    return render_template('myplaylist.html')
+    return my_playlist_api.renderMyPlaylist()
+    # user_id = request.form['user_id']
+    # print('user_id', user_id)
+    # if user_id is not None:
+    #     playlists = list(db.playlists.find({'user': user_id}, {'_id': 0}))
+    #     print(playlists)
+    #     return render_template('myplaylist.html', playlists = playlists)
+    # else:
+    #     return render_template('myplaylist.html')
+  
 
 @app.route('/login/api', methods=['POST'])
 def api_login():
@@ -72,6 +85,7 @@ def api_login():
         print(payload['exp'])
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         user_info = {'name' : result['name'], 'id' : result['id']}
+
         return jsonify({'result' : 'success', 'msg' : result['name'] + '님 환영합니다.','token' : token, 'info' : user_info})
     else:
         return jsonify({'result' : 'success', 'msg' : "아이디/비밀번호가 일치하지 않습니다."})
