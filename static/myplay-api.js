@@ -31,7 +31,6 @@ function searchSong() {
         searchList = response["song"];
         for (let i = 0; i < searchList.length; i++) {
           makeSearchList(
-            i + 1,
             searchList[i]["song_name"],
             searchList[i]["song_singer"],
             id
