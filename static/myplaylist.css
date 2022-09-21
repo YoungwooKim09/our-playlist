@@ -25,12 +25,13 @@ main {
 }
 
 .playlist-title {
+  margin-top: 10px;
   font-size: 1.2rem;
 }
 
 .playlist-title-input {
   margin-top: 10px;
-  width: 300px;
+  width: 350px;
   outline: none;
   border: solid 1px var(--gray-300);
   border-radius: 4px;
@@ -61,4 +62,8 @@ button.save-playlist {
   padding: 1px 13px;
   background-color: var(--black-100);
   color: var(--white-100);
+}
+
+.save-playlist {
+  margin-left: 290px;
 }
