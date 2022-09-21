@@ -29,9 +29,9 @@ def listAllplaylists():
 
 @app.route('/list/popular', methods=['GET'])
 def listPopularlists():
-
-    popular_playlists = list(db.songlists.find({}, {'_id': 0}).sort('like', -1))
     
+    popular_playlists = list(db.songslists.find({}, {'_id': 0}).sort('like', -1))
+
     return jsonify ({'result': 'success', 'popular_playlists': popular_playlists})
 
 
@@ -79,13 +79,13 @@ def addSong():
     
     db.playlists.update_one({'title': title_receive},{'$set':{'created_at':time_receive}})
 
-    sameornot = db.songlists.find_one({'songname': song_receive}, {'artist': artist_receive})
+    sameornot = db.songslists.find_one({'songname': song_receive}, {'artist': artist_receive})
     
     if sameornot is None :
-        db.songlists.insert_one(addSong)
+        db.songslists.insert_one(addSong)
     else :
         new_like = sameornot['like'] + 1
-        db.songlists.update_one({'songname': song_receive}, {'artist': artist_receive}, {'$set':{'like': new_like}})
+        db.songslists.update_one({'songname': song_receive}, {'artist': artist_receive}, {'$set':{'like': new_like}})
 
     return jsonify ({'result': 'success'})
 
