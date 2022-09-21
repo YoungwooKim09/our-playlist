@@ -98,11 +98,10 @@ def deleteSong():
     return jsonify ({'result': 'success'})
 
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET','POST'])
 def searchList():
 
     search_receive = request.form['search_give']
-    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
     data = requests.get('https://www.melon.com/search/total/index.htm?q='+search_receive+'&section=&mwkLogType=T', headers=headers)

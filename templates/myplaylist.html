@@ -20,6 +20,7 @@
 </head>
 
 <body>
+
   <header>
     <div class="header-contents">
       <div class="page-title-area">
@@ -71,41 +72,25 @@
         {% endfor %}
       </ul>
     </secion>
+
     <secion class="right-area">
       <div class="popular-songs-area">
-        <p class="area-title title-center">가장 많이 담긴 곡</p>
-        <div id="popular-list">
-          <input id="search-song" placeholder="노래제목을 입력하세요.">
-          <button onclick="searchSong()" type="submit">검색</button>
+        <p class="area-title title-center">노래추가</p>
+        <div id = "popular-list">
+          <input id="input-search" placeholder="노래제목을 입력하세요.">
+          <button onclick="searchSong()" type="submit">검색</button> 
         </div>
       </div>
+      <div class="search-result"></div>
     </secion>
     <!-- <section>
     <input id="search-song" placeholder="노래제목을 입력하세요.">
     <button onclick="searchSong()" type="submit">검색</button>
     </section> -->
     <!-- Modal -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </main>
+  
+  
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
