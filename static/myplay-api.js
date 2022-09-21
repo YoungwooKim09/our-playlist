@@ -1,3 +1,5 @@
+
+
 function deletePlaylist(index) {
   let delete_title = $(".area-title" + index).text();
 
@@ -18,6 +20,7 @@ function deletePlaylist(index) {
 
 function searchSong() {
   let search_song = $("#search-song").val();
+  console.log('search')
 
   $.ajax({
     type: "POST",

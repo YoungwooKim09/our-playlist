@@ -43,9 +43,9 @@
         <button type="button" class="create-playlist-button">
           <i class="fa-solid fa-circle-plus fa-6x"></i>
         </button>
-        <div class="create-playlist-form-wrapper hide">
+        <div class="create-playlist-form hide">
           <div class="playlist-title">플레이리스트 제목</div>
-          <form class="create-playlist-form">
+          <form>
             <!-- <label for="playlist-title">플레이리스트 제목</label> -->
             <input type="text" name="playlist-title" class="playlist-title-input" id="playlist-title">
             <button type="button" class="save-playlist">저장</button>
@@ -68,8 +68,10 @@
         {% endfor %}
       </ul>
     </secion>
-
-
+    <section>
+    <input id="search-song" placeholder="노래제목을 입력하세요.">
+    <button onclick="searchSong()" type="submit">검색</button>
+    </section>
     <!-- Modal -->
     <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -93,6 +95,8 @@
     </div> -->
   </main>
 
+  <script type="text/javascript" src="/static/myplay-api.js"></script>
+  <script type="text/javascript" src="/static/myplay.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

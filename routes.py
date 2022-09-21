@@ -8,6 +8,30 @@ import datetime
 client = MongoClient('localhost', 27017)
 db = client.testdb
 
+db.playlists.drop()
+# 더미데이터 초기화
+for number in range(101):
+    user = "user {0}".format(number)
+    title = "{0}번째 playlist A".format(number),
+    db.playlists.insert_one({
+        'user': user,
+        'title': title,
+        'songs':[{'songname':'새삥 (Prod. ZICO) (Feat. 호미들)', 'artist':'지코 (ZICO)'},
+        {'songname':'After LIKE ', 'artist':'IVE'},
+        {'songname':'Attention', 'artist':'NewJeans'},
+        {'songname':'11', 'artist':'111'},
+        {'songname':'22', 'artist':'222'}
+        ]})
+
+# db.playlists.insert_one({
+#     'user':'suyeon',
+#     'title': '힙합 플레이리스트!',
+#     'songs':[
+#     {'songname':'가가가', 'artist':'나나나'}, 
+#     {'songname':'asdf', 'artist':'efef'}, 
+#     {'songname':'jklkj', 'artist':'seffew'}
+#     ]})
+
 @app.route('/')
 def home():
     playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
@@ -24,20 +48,24 @@ def listAllplaylists():
         foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
         return jsonify ({'result': 'success', 'all_playlists': foundElements})
 
+
 @app.route('/list/popular', methods=['GET'])
 def listPopularlists():
 
-    result = list(db.playlists.find({}, {'_id': 0}).sort('like', -1))
-
+    result = list(db.playlists.find({}, {'_id': 0}))
+    
     return jsonify ({'result': 'success', 'popular_playlists': result})
+
 
 
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
-    title = request.form['title']
-    user = request.form['user']
 
-    playlist = {'user': user, 'title': title,'created_at' : 0}
+    user_receive = request.form['user_give']
+    title_receive = request.form['title_give']
+    song_receive = []
+    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'created_at' : 0}
+
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})
@@ -92,8 +120,8 @@ def deleteSong():
 @app.route('/search', methods=['GET', 'POST'])
 def searchList():
 
-    #search_receive = request.form['search_give']
-    search_receive = '어디에도'
+    search_receive = request.form['search_give']
+    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
     data = requests.get('https://www.melon.com/search/total/index.htm?q='+search_receive+'&section=&mwkLogType=T', headers=headers)
