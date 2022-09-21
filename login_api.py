@@ -13,32 +13,6 @@ bcrypt = Bcrypt(app)
 client = MongoClient('localhost', 27017)
 db = client.accountdb
 SECRET_KEY = 'WOOPLY'
-def check_access_token(access_token):
-    print('check_token')
-    try:
-        payload = jwt.decode(access_token, SECRET_KEY, 'HS256')
-        print(payload['exp'], time.time)
-        if payload['exp'] < time.time():
-            payload = None
-    except jwt.InvalidTokenError:
-        payload = None
-    return payload
-
-def login_confirm(f):
-    print('logining')
-    @wraps(f)
-    def deco_func(*args, **kwagrs):
-        print('deco_func')
-        access_token = request.headers.get('Cookie')
-        print(access_token)
-        if access_token is not None:
-            payload = check_access_token(access_token)
-            if payload is None:
-                return render_template('login.html')
-        else:
-            return render_template('login.html')
-        return f(*args, **kwagrs)
-    return deco_func
 
 # @login_confirm
 # def action():
@@ -79,8 +53,6 @@ def login_confirm(f):
 @login_confirm
 def api_():
     return redirect(url_for('home'))
-
-
 
 @app.route('/my-playlist')
 @login_confirm
