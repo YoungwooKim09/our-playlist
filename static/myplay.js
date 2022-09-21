@@ -1,5 +1,9 @@
 const createPlaylistButtonArea = document.querySelector(".create-button-area");
 const createPlaylistButton = document.querySelector(".create-playlist-button");
+const createPlaylistFormWrapper = document.querySelector(
+  ".create-playlist-form-wrapper"
+);
+
 const createPlaylistForm = document.querySelector(".create-playlist-form");
 const playlistTitleInput = document.querySelector(".playlist-title-input");
 const savePlaylistButton = document.querySelector(".save-playlist");
@@ -9,7 +13,7 @@ createPlaylistButton.addEventListener("click", showCreatePlaylistForm);
 function showCreatePlaylistForm() {
   createPlaylistButtonArea.classList.add("show-form");
   createPlaylistButton.classList.add("hide");
-  createPlaylistForm.classList.remove("hide");
+  createPlaylistFormWrapper.classList.remove("hide");
 }
 
 savePlaylistButton.addEventListener("click", savePlayList);
@@ -18,4 +22,11 @@ function savePlayList() {
   const dummyUser = "me";
   const title = playlistTitleInput.value;
   addPlaylist(title, dummyUser);
+}
+
+createPlaylistForm.addEventListener("keypress", keypress);
+
+function keypress(event) {
+  event.preventDefault();
+  console.log(event.key);
 }
