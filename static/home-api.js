@@ -3,6 +3,7 @@ let page = 1;
 $(document).ready(function () {
   $(".feed").html("");
   showAllplaylists(page);
+  showPopularlist()
 });
 
 let firstScroll = true;
@@ -41,12 +42,13 @@ function showAllplaylists(page) {
 }
 
 function showPopularlist() {
+  $("#popular-list").empty()
   $.ajax({
     type: "GET",
     url: "/list/popular",
     data: {},
     success: function (response) {
-      // 성공하면
+      console.log(response);
       if (response["result"] == "success") {
         
         popularList = response['popular_playlists'];
@@ -59,13 +61,10 @@ function showPopularlist() {
 }
 
 function makePopularList(index, songname, artist) {
-  let tempHtml =    `<div class="popular-songs-area">
-                      <p class="area-title title-center">가장 많이 담긴 곡</p>
-                      <p>${index}. ${songname} - ${artist}</p>
-                    </div>`
-  $("section.right-area").append(tempHtml);
+  let tempHtml =    `<p>${index}. ${songname} - ${artist}</p>`
+  $("#popular-list").append(tempHtml);
 }
-// line 63-64 해결하기 : 미리 만들어놓기
+
 
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<div class="playlist-block">
