@@ -38,6 +38,7 @@ def home():
     return render_template('index.html', playlists = playlists)
 
 
+
 @app.route('/list/all', methods=['GET'])
 def listAllplaylists():
     page = request.args.get('page')
