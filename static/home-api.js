@@ -6,16 +6,21 @@ $(document).ready(function () {
   
 });
 
+let firstScroll = true;
 $(window).scroll(function () {
   var scrolltop = $(window).scrollTop();
   if (scrolltop == $(document).height() - $(window).height()) {
     console.log("맨끝 도착");
-    showAllplaylists(++page);
+    if (firstScroll) {
+      $(".feed").html("");
+    }
+    showAllplaylists(page++, firstScroll);
+    firstScroll = false;
   }
 });
 
+let playlistIndex = 0;
 function showAllplaylists(page) {
-  console.log("currentpage : ", page);
   $.ajax({
     type: "GET",
     url: `/list/all`,
@@ -23,10 +28,9 @@ function showAllplaylists(page) {
     success: function (response) {
       if (response["result"] == "success") {
         all_playlists = response["all_playlists"];
-        console.log("all_playlists", all_playlists);
         for (let i = 0; i < all_playlists?.length; i++) {
           makeList(
-            i,
+            playlistIndex++,
             all_playlists[i]["user"],
             all_playlists[i]["title"],
             all_playlists[i]["songs"]
@@ -45,21 +49,30 @@ function showPopularlist() {
     success: function (response) {
       // 성공하면
       if (response["result"] == "success") {
-        alert("포스팅 성공!");
-        // 3. 성공 시 페이지 새로고침하기
-        window.location.reload();
-      } else {
-        alert("다시 입력하세요!");
+        
+        popularList = response['popular_playlists'];
+        for (i = 0; i < popularList.length; i++) {
+          makePopularList(i+1, popularList[i]['songname'], popularList[i]['artist'])
+        } 
       }
     },
   });
 }
 
+function makePopularList(index, songname, artist) {
+  let tempHtml =    `<div class="popular-songs-area">
+                      <p class="area-title title-center">가장 많이 담긴 곡</p>
+                      <p>${index}. ${songname} - ${artist}</p>
+                    </div>`
+  $("section.right-area").append(tempHtml);
+}
+// line 63-64 해결하기 : 미리 만들어놓기
+
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<li>
-                      <div class="playlist-block playlist-block${index}">
-                        <p class="area-title area-title${index}">${title} by ${user}</p>
-                        <ul class="songs${index}"></ul>
+                      <div class="playlist-block playlist-block-${index}">
+                        <p class="area-title area-title-${index}">${title} by ${user}</p>
+                        <ul class="songs-${index}"></ul>
                       </div>
                     </li>`;
   $(".feed").append(tempHtml_pl);
@@ -71,10 +84,10 @@ function makeList(index, user, title, songs) {
 
     let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-    $(`.songs${index}`).append(tempHtml_s);
+    $(`.songs-${index}`).append(tempHtml_s);
   }
-  let spreadButtonHtml = `<button class="spread-button spread-button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
-  $(`.playlist-block${index}`).append(spreadButtonHtml);
+  let spreadButtonHtml = `<button class="spread-button spread-button-${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
+  $(`.playlist-block-${index}`).append(spreadButtonHtml);
 
   const toggleSpreadButton = (function () {
     let spread = false;
@@ -93,7 +106,7 @@ function makeList(index, user, title, songs) {
     };
   })();
 
-  let spreadButton = document.querySelector(`.spread-button${index}`);
+  let spreadButton = document.querySelector(`.spread-button-${index}`);
   spreadButton.addEventListener("click", toggleSpreadButton.bind(null, index));
 
   function toggle(currentState, nextState, showCount) {
@@ -102,15 +115,16 @@ function makeList(index, user, title, songs) {
       start = 3;
     } else if (currentState === "spread" && nextState === "fold") {
       start = 0;
-      $(`.songs${index}`).html("");
+      $(`.songs-${index}`).html("");
     }
 
+    console.log();
     for (let j = start; j < showCount; j++) {
       let song_name = songs[j]["songname"];
       let song_artist = songs[j]["artist"];
       let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-      $(`.songs${index}`).append(tempHtml_s);
+      $(`.songs-${index}`).append(tempHtml_s);
     }
   }
 }

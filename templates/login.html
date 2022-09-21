@@ -88,10 +88,8 @@
         }
       })
     }
-    function tokenization() {
-      let jwt = require("jsonwebtoken");
-      let secretObj = require("../config/jwt")
-
+    function createCookie(value) {
+      document.cookie = value
     }
     function log_in() {
 
@@ -103,16 +101,16 @@
         data: { id_return: id, pw_return: pw },
         success: function (response) {
           if (response['result'] == 'success') {
-            // alert('log-in-success');
-            console.log(id, pw);
             alert(response['msg'])
+            if(response['token']){
+              createCookie(response['token'])
+            }
           }
           else {
-            alert('log-in-fail');
+            alert('server-connection-fail');
           }
         }
-      })
-      return false;
+      }).done(location.href('/'))
     }
   </script>
 </head>
@@ -133,7 +131,7 @@
           style="background-color: white; color : black">회원가입</button>
       </div>
       <div class="contents-box">
-        <div class="login-box" id="log-in-box">
+        <form class="login-box" id="log-in-box">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <input type="email" class="form-control" id="log-in-email" aria-describedby="emailHelp">
@@ -147,9 +145,9 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
           </div>
-          <button onclick="log_in()" class="btn btn-primary">로그인</button>
-        </div>
-        <div class="signup-box" id="sign-up-box" style="display: none;">
+          <button onclick="log_in()" type="submit" class="btn btn-primary">로그인</button>
+        </form>
+        <form class="signup-box" id="sign-up-box" style="display: none;">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <input type="email" class="form-control" id="sign-up-email" aria-describedby="emailHelp">
@@ -168,7 +166,7 @@
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
           </div>
           <button onclick="sign_up()" type="submit" class="btn btn-primary">회원가입</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
