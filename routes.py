@@ -32,16 +32,10 @@ for number in range(101):
 #     {'songname':'jklkj', 'artist':'seffew'}
 #     ]})
 
-<<<<<<< HEAD
 @app.route('/')
 def home():
     playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
     return render_template('index.html', playlists = playlists)
-=======
-# @app.route('/')
-# def home():
-#     return render_template('index.html')
->>>>>>> 8b34553 (feature. jwt cookiei 저장)
 
 
 @app.route('/list/all', methods=['GET'])
