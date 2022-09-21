@@ -34,7 +34,8 @@ for number in range(101):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
+    return render_template('index.html', playlists = playlists)
 
 
 @app.route('/list/all', methods=['GET'])
