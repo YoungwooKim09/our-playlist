@@ -1,5 +1,5 @@
 from __main__ import app
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import render_template, jsonify, request 
 import hashlib
 from pymongo import MongoClient
@@ -23,16 +23,14 @@ def api_login():
     pw_hash = hashlib.sha256(pw_rec.encode('utf-8')).hexdigest()
 
     result = db.user.find_one({'id' : id_rec, 'pw' : pw_hash})
-
+    print(result)
     if result is not None:
-
         payload = {
             'id' : id_rec,
-            # 'exp' : datetime.utcnow() + datetime.timedelta(seconds=5)
+            'exp' : datetime.utcnow() + timedelta(seconds=5)
         }
-
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        return jsonify({'result' : 'success', 'token' : token})
+        return jsonify({'result' : 'success', 'msg' : result['name'] + '님 환영합니다.', 'token' : token})
     else:
         return jsonify({'result' : 'success', 'msg' : "아이디/비밀번호가 일치하지 않습니다."})
 
