@@ -1,8 +1,9 @@
 let page = 1;
 
 $(document).ready(function () {
-  // $(".feed").html("");
-  // showAllplaylists(page);
+  $(".feed").html("");
+  showAllplaylists(page);
+  
 });
 
 let firstScroll = true;
@@ -130,8 +131,8 @@ function addPlaylist() {
     success: function (response) {
       if (response["result"] == "success") {
         alert("플레이 리스트 만들기 성공!");
-
         window.location.reload();
+
       } else {
         alert("다시 입력하세요!");
       }
