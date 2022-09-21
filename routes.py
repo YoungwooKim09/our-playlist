@@ -48,6 +48,7 @@ def listAllplaylists():
         foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
         return jsonify ({'result': 'success', 'all_playlists': foundElements})
 
+
 @app.route('/list/popular', methods=['GET'])
 def listPopularlists():
 
@@ -81,33 +82,53 @@ def deletePlaylist():
 @app.route('/add/song', methods=['POST'])
 def addSong():
 
+    title_receive = request.form['title_give']
     song_receive = request.form['song_give']
     artist_receive = request.form['artist_give']
     time_receive = datetime.datetime.utcnow()
 
     addSong = {'songname': song_receive, 'artist': artist_receive}
-    playlists = playlists['songs'].append(addSong)
+
+    target = db.playlists.find_one({'title': title_receive})
+    target['songs'].append(addSong)
     
-    db.playlists.update_one({'user': 'user_receive'},{'$set':{'created_at':time_receive}})
-    # 해당 Playlist 특정 기능
+    db.playlists.update_one({'title': title_receive},{'$set':{'created_at':time_receive}})
+
+    return jsonify ({'result': 'success'})
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/delete/song', methods=['POST'])
+def deleteSong():
+
+    title_receive = request.form['title_give']
+    song_receive = request.form['song_give']
+    artist_receive = request.form['artist_give']
+
+    target = db.playlists.find_one({'title': title_receive})
+    target['songs'].remove({'songname': song_receive, 'artist': artist_receive})
+    
+    return jsonify ({'result': 'success'})
+
+
+@app.route('/search', methods=['GET', 'POST'])
 def searchList():
 
-    search_receive = request.form['search_give']
-
+    #search_receive = request.form['search_give']
+    search_receive = '어디에도'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get('https://www.melon.com/search/total/index.htm?q=${search_receive}&section=&mwkLogType=T', headers=headers)
-
+    data = requests.get('https://www.melon.com/search/total/index.htm?q='+search_receive+'&section=&mwkLogType=T', headers=headers)
+    
     soup = BeautifulSoup(data.text, 'html.parser')
-
     search_song_list = soup.select('#frm_searchSong tbody > tr > td.t_left div.ellipsis > a.fc_gray')
     search_artist_list = soup.select('#artistName > a')
 
-    search_song_name = list(search_song_list.text)
-    search_song_artist = list(search_artist_list.text)
+    search_song_names = list(search_song_list)
+    search_song_artists = list(search_artist_list.text)
 
-    return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
+    print(search_song_names)
+
+    total_list = []
+
+    return jsonify ({'result': 'success'})
     # '노래 제목 : 가수' 형태로 데이터 전달 구현
