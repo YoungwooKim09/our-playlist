@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 console.log();
 
 const userInfo = (function () {
@@ -25,7 +25,3 @@ const userInfo = (function () {
   };
 })();
 
-console.log(userInfo.getUserInfo());
-=======
-var user_info;
->>>>>>> 45ff74c (최신화)
