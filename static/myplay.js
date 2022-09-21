@@ -21,10 +21,24 @@ function showCreatePlaylistForm() {
 savePlaylistButton.addEventListener("click", savePlayList);
 
 function savePlayList() {
-  const dummyUser = "me";
+  let userId = null;
+  const cookies = document.cookie.split("; ");
+  for (let cookie of cookies) {
+    const [name, value] = cookie.split("=");
+    if (name === "userinfo") {
+      userinfo = JSON.parse(value);
+      for (let key in userinfo) {
+        if (key === "id") {
+          userId = userinfo[key];
+        }
+      }
+    }
+  }
+
   const title = playlistTitleInput.value;
   if (!title) return;
-  addPlaylist(title, dummyUser);
+  addPlaylist(title, userId);
+  playlistTitleInput.value = "";
 }
 
 createPlaylistForm.addEventListener("keydown", keyPress);

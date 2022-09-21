@@ -12,6 +12,7 @@ import jwt
 bcrypt = Bcrypt(app)
 client = MongoClient('localhost', 27017)
 db = client.accountdb
+testdb = client.testdb
 SECRET_KEY = 'WOOPLY'
 
 # @login_confirm
@@ -57,7 +58,15 @@ def api_():
 @app.route('/my-playlist')
 @login_confirm
 def playlist():
-    return render_template('myplaylist.html')
+    user_id = request.headers.get('Cookie').split('"id":')[1].split(',')[0].split('"')[1]
+    print('user_id', user_id)
+    if user_id is not None:
+        playlists = list(testdb.playlists.find({'user': user_id}, {'_id': 0}))
+        print(playlists)
+        return render_template('myplaylist.html', playlists = playlists)
+    else:
+        return render_template('myplaylist.html')
+
 
 @app.route('/login/api', methods=['POST'])
 def api_login():
