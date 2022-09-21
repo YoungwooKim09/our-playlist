@@ -67,9 +67,22 @@ const modalTitle = document.querySelector(".modal-area-title");
 
 function openModal(id, title) {
   console.log("플레이리스트 id", id);
-  const currentGhost = document.querySelector('.current-ghost');
-  currentGhost.setAttribute('modal-id', id)
+  const currentGhost = document.querySelector(".current-ghost");
+  currentGhost.setAttribute("modal-id", id);
 
+  modalArea.classList.remove("hide");
+  modalTitle.textContent = title;
 
-  return id
+  const deleteSongsButtons = document.querySelectorAll(".delete-song-button");
+
+  for (let i = 0; i < deleteSongsButtons?.length; ++i) {
+    deleteSongsButtons[i].addEventListener("click", function () {
+      const order = i + 1;
+      const item = document.querySelector(`.delete-song-button-${order}`);
+      const id = item.getAttribute("button-id");
+      deletePlaylist(id);
+    });
+
+    return id;
+  }
 }

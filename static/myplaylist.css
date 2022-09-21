@@ -91,12 +91,14 @@ button.save-playlist {
 }
 
 .modal-area {
+  background-color: var(--white-100);
   position: fixed;
   right: 0;
   top: 0;
   padding: 17px 12px;
   margin-top: 200px;
-  margin-right: 20%;
+  margin-right: 15%;
+  max-width: 350px;
   min-width: 250px;
   min-height: 120px;
   border: solid 1px var(--gray-300);
