@@ -20,7 +20,6 @@ function deletePlaylist(index) {
 
 function searchSong() {
   let search_song = $("#search-song").val();
-  console.log('search')
 
   $.ajax({
     type: "POST",
@@ -56,8 +55,7 @@ function addSong() {
     type: "POST",
     url: "/add/song",
     data: { song_give: song, artist_give: artist },
-    success: function (response) {
-      // 성공하면
+    success: function (response) { // 성공하면
       if (response["result"] == "success") {
         alert("포스팅 성공!");
         // 3. 성공 시 페이지 새로고침하기
