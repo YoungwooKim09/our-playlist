@@ -8,24 +8,6 @@ import datetime
 client = MongoClient('localhost', 27017)
 db = client.testdb
 
-db.playlists.insert_one({
-    'user':'youngwoo',
-    'title': 'playlist A',
-    'songs':[{'songname':'새삥 (Prod. ZICO) (Feat. 호미들)', 'artist':'지코 (ZICO)'},
-    {'songname':'After LIKE ', 'artist':'IVE'},
-    {'songname':'Attention', 'artist':'NewJeans'}
-    ]})
-
-    
-db.playlists.insert_one({
-    'user':'suyeon',
-    'title': '힙합 플레이리스트!',
-    'songs':[
-    {'songname':'가가가', 'artist':'나나나'}, 
-    {'songname':'asdf', 'artist':'efef'}, 
-    {'songname':'jklkj', 'artist':'seffew'}
-    ]})
-
 
 @app.route('/')
 def home():
@@ -36,8 +18,16 @@ def home():
 def listAllplaylists():
 
     result = list(db.playlists.find({}, {'_id': 0}))
-    print(result)
+    
     return jsonify ({'result': 'success', 'all_playlists': result})
+
+
+@app.route('/list/popular', methods=['GET'])
+def listPopularlists():
+
+    result = list(db.playlists.find({}, {'_id': 0}))
+    
+    return jsonify ({'result': 'success', 'popular_playlists': result})
 
 
 @app.route('/add/playlist', methods=['POST'])
@@ -46,11 +36,21 @@ def addPlaylist():
     user_receive = request.form['user_give']
     title_receive = request.form['title_give']
     song_receive = []
-    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'time_receive' : 0}
+    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'created_at' : 0}
 
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})
+
+
+@app.route('/delete/playlist', methods=['POST'])
+def deletePlaylist():
+
+    delete_receive = request.form['delete_give']
+    db.playlists.delete_one({'title': delete_receive})
+
+    return jsonify ({'result': 'success'})
+
 
 @app.route('/add/song', methods=['POST'])
 def addSong():
@@ -61,9 +61,9 @@ def addSong():
 
     addSong = {'songname': song_receive, 'artist': artist_receive}
     playlists = playlists['songs'].append(addSong)
-    # time_receive 업데이트
-    # songs 딕셔너리 추가
-    db.playlists.update_one({'user': 'user_receive'},{'$set':{'time':time_receive}})
+    
+    db.playlists.update_one({'user': 'user_receive'},{'$set':{'created_at':time_receive}})
+    # 해당 Playlist 특정 기능
 
 
 @app.route('/search', methods=['POST'])
@@ -84,3 +84,4 @@ def searchList():
     search_song_artist = list(search_artist_list.text)
 
     return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
+    # '노래 제목 : 가수' 형태로 데이터 전달 구현
