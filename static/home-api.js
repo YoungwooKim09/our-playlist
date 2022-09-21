@@ -5,14 +5,20 @@ $(document).ready(function () {
   showAllplaylists(page);
 });
 
+let firstScroll = true;
 $(window).scroll(function () {
   var scrolltop = $(window).scrollTop();
   if (scrolltop == $(document).height() - $(window).height()) {
     console.log("맨끝 도착");
-    showAllplaylists(++page);
+    if (firstScroll) {
+      $(".feed").html("");
+    }
+    showAllplaylists(page++, firstScroll);
+    firstScroll = false;
   }
 });
 
+let playlistIndex = 0;
 function showAllplaylists(page) {
   console.log("currentpage : ", page);
   $.ajax({
@@ -22,10 +28,9 @@ function showAllplaylists(page) {
     success: function (response) {
       if (response["result"] == "success") {
         all_playlists = response["all_playlists"];
-        console.log("all_playlists", all_playlists);
         for (let i = 0; i < all_playlists?.length; i++) {
           makeList(
-            i,
+            playlistIndex++,
             all_playlists[i]["user"],
             all_playlists[i]["title"],
             all_playlists[i]["songs"]
@@ -55,10 +60,11 @@ function showPopularlist() {
 }
 
 function makeList(index, user, title, songs) {
+  console.log(index);
   let tempHtml_pl = `<li>
-                      <div class="playlist-block playlist-block${index}">
-                        <p class="area-title area-title${index}">${title} by ${user}</p>
-                        <ul class="songs${index}"></ul>
+                      <div class="playlist-block playlist-block-${index}">
+                        <p class="area-title area-title-${index}">${title} by ${user}</p>
+                        <ul class="songs-${index}"></ul>
                       </div>
                     </li>`;
   $(".feed").append(tempHtml_pl);
@@ -70,10 +76,10 @@ function makeList(index, user, title, songs) {
 
     let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-    $(`.songs${index}`).append(tempHtml_s);
+    $(`.songs-${index}`).append(tempHtml_s);
   }
-  let spreadButtonHtml = `<button class="spread-button spread-button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
-  $(`.playlist-block${index}`).append(spreadButtonHtml);
+  let spreadButtonHtml = `<button class="spread-button spread-button-${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
+  $(`.playlist-block-${index}`).append(spreadButtonHtml);
 
   const toggleSpreadButton = (function () {
     let spread = false;
@@ -92,7 +98,7 @@ function makeList(index, user, title, songs) {
     };
   })();
 
-  let spreadButton = document.querySelector(`.spread-button${index}`);
+  let spreadButton = document.querySelector(`.spread-button-${index}`);
   spreadButton.addEventListener("click", toggleSpreadButton.bind(null, index));
 
   function toggle(currentState, nextState, showCount) {
