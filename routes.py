@@ -118,17 +118,13 @@ def searchList():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
     data = requests.get('https://www.melon.com/search/total/index.htm?q='+search_receive+'&section=&mwkLogType=T', headers=headers)
-    
     soup = BeautifulSoup(data.text, 'html.parser')
-    search_song_list = soup.select('#frm_searchSong tbody > tr > td.t_left div.ellipsis > a.fc_gray')
-    search_artist_list = soup.select('#artistName > a')
-
-    search_song_names = list(search_song_list)
-    search_song_artists = list(search_artist_list.text)
-
-    print(search_song_names)
-
-    total_list = []
-
-    return jsonify ({'result': 'success'})
+    search_song_list = soup.select('tbody > tr')
+    song_list = []
+    for songs in search_song_list :
+        song_list.append({
+            'song_name' :  songs.select_one('td.t_left > div.wrap.pd_none > div.ellipsis > a.fc_gray').text,
+            'song_singer' : songs.select_one('#artistName > a').text
+        })
+    return jsonify ({'result': 'success', 'song' : song_list})
     # '노래 제목 : 가수' 형태로 데이터 전달 구현
