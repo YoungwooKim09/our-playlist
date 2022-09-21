@@ -13,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+a:hover {
+  color: var(--black-100);
+}
+
 header {
   position: fixed;
   top: 0;
@@ -51,8 +55,13 @@ header {
   height: 45px;
   display: flex;
   justify-content: center;
-  background-color: black;
+  background-color: var(--black-100);
   /* border: solid 2px black; */
   border-radius: 6px;
   color: var(--white-100);
+}
+
+.home-button-login:hover {
+  background-color: var(--white-100);
+  border: solid 2px var(--black-100);
 }
