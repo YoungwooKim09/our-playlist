@@ -37,6 +37,12 @@
     .contents-box {
       margin-top: 10px;
     }
+    
+    a.gohome:link{
+      color: #000;
+      text-decoration : none;
+
+    }
   </style>
   <script>
     function login_open() {
@@ -82,7 +88,11 @@
         }
       })
     }
+    function tokenization() {
+      let jwt = require("jsonwebtoken");
+      let secretObj = require("../config/jwt")
 
+    }
     function log_in() {
 
       let id = $('#log-in-email').val();
@@ -93,8 +103,9 @@
         data: { id_return: id, pw_return: pw },
         success: function (response) {
           if (response['result'] == 'success') {
-            alert('log-in-success');
+            // alert('log-in-success');
             console.log(id, pw);
+            alert(response['msg'])
           }
           else {
             alert('log-in-fail');
@@ -109,9 +120,11 @@
 <body>
   <div class="pad">
     <div class="padding-box" style="font-family: 'Nanum Gothic', sans-serif;">
-      <h1 style="text-align: center;">
-        우 플 리
-      </h1>
+      <a  class="gohome" href="/">
+        <h1 style="text-align: center;">
+          우리들의 플레이 리스트
+        </h1>
+      </a>
 
       <br>
       <div class="btn-group" role="group" aria-label="Basic example">
