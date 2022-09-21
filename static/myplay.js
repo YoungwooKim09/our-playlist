@@ -1,3 +1,5 @@
+showMyPlaylists();
+
 const createPlaylistButtonArea = document.querySelector(".create-button-area");
 const createPlaylistButton = document.querySelector(".create-playlist-button");
 const createPlaylistFormWrapper = document.querySelector(

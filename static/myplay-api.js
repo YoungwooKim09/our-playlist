@@ -1,5 +1,4 @@
 function deletePlaylist(index) {
-
   let delete_title = $(".area-title" + index).text();
 
   $.ajax({
@@ -8,15 +7,13 @@ function deletePlaylist(index) {
     data: { delete_give: delete_title },
     success: function (response) {
       if (response["result"] == "success") {
-
-        alert("플레이 리스트 삭제 완료!")
+        alert("플레이 리스트 삭제 완료!");
         window.location.reload();
-
       } else {
-        alert("다시 입력하세요!")
+        alert("다시 입력하세요!");
       }
-    }
-  })
+    },
+  });
 }
 
 function searchSong() {
@@ -28,18 +25,22 @@ function searchSong() {
     data: { search_give: search_song },
     success: function (response) {
       if (response["result"] == "success") {
-        console.log(response['song']);
-        searchList = response['song'];
+        console.log(response["song"]);
+        searchList = response["song"];
         for (let i = 0; i < searchList.length; i++) {
-          makeSearchList(i + 1, searchList[i]['song_name'], searchList[i]['song_singer']);
+          makeSearchList(
+            i + 1,
+            searchList[i]["song_name"],
+            searchList[i]["song_singer"]
+          );
         }
       }
-    }
-  })
+    },
+  });
 }
 
 function makeSearchList(index, songName, songArtist) {
-  let tempHtml
+  let tempHtml;
 }
 
 function addSong() {
@@ -80,6 +81,34 @@ function addPlaylist(title, user) {
       } else {
         alert("다시 입력하세요!");
       }
+    },
+  });
+}
+
+function showMyPlaylists() {
+  let userId = null;
+  const cookies = document.cookie.split("; ");
+  for (let cookie of cookies) {
+    const [name, value] = cookie.split("=");
+    if (name === "userinfo") {
+      userinfo = JSON.parse(value);
+      for (let key in userinfo) {
+        if (key === "id") {
+          userId = userinfo[key];
+        }
+      }
+    }
+  }
+  $.ajax({
+    type: "GET",
+    url: `/list/myplaylist`,
+    data: { user_id: userId },
+    success: function (response) {
+      console.log("success");
+      // if (response["result"] == "success") {
+      //   my_playlists = response["my_playlists"];
+      //   console.log(my_playlists)
+      // }
     },
   });
 }
