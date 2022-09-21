@@ -46,7 +46,7 @@ header {
 
 .header-contents {
   display: grid;
-  grid-template-columns: 65% 1fr;
+  grid-template-columns: 60% 1fr;
 }
 
 .page-title-area {
