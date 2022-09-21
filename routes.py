@@ -3,6 +3,7 @@ from __main__ import app
 import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import datetime
 from bson.objectid import ObjectId
 
@@ -39,7 +40,7 @@ def addPlaylist():
     title = request.form['title']
     user = request.form['user']
 
-    playlist = {'user': user, 'title': title,'created_at' : 0}
+    playlist = {'user': user, 'title': title, 'songs' : [], 'created_at' : 0}
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})
@@ -66,23 +67,28 @@ def addSong():
 
     song_receive = request.form['song_give']
     artist_receive = request.form['artist_give']
-    title_receive = request.form['title_give']
+    id_receive = ObjectId(request.form['id_give'])
     time_receive = datetime.datetime.utcnow()
 
     addSong = {'songname': song_receive, 'artist': artist_receive}
-
-    target = db.playlists.find_one({'title': title_receive})
-    target['songs'].append(addSong)
+    print(addSong)
+    print(id_receive)
+    target = db.playlists.find_one({'_id': id_receive})
+    print(target)
+    t = target['songs']
+    t.append(addSong)
+    db.playlists.update_one({'_id': id_receive},{'$set': {'songs': t}})
     
-    db.playlists.update_one({'title': title_receive},{'$set':{'created_at':time_receive}})
+    print('last call', db.playlists.find_one({'_id' : id_receive}))
+    # db.playlists.update_one({'_id': id_receive},{'$set':{'created_at':time_receive}})
 
-    sameornot = db.songslists.find_one({'songname': song_receive}, {'artist': artist_receive})
+    # sameornot = db.songslists.find_one({'songname': song_receive}, {'artist': artist_receive})
     
-    if sameornot is None :
-        db.songslists.insert_one(addSong)
-    else :
-        new_like = sameornot['like'] + 1
-        db.songslists.update_one({'songname': song_receive}, {'artist': artist_receive}, {'$set':{'like': new_like}})
+    # if sameornot is None :
+    #     db.songslists.insert_one(addSong)
+    # else :
+    #     new_like = sameornot['like'] + 1
+    #     db.songslists.update_one({'songname': song_receive}, {'artist': artist_receive}, {'$set':{'like': new_like}})
 
     return jsonify ({'result': 'success'})
 

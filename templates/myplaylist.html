@@ -73,13 +73,13 @@
         {% endfor %}
       </ul>
     </secion>
-
-    <secion class="modal-area hide">
-      <div class="add-song-modal">
-        <p class="area-title title-center modal-area-title">노래추가</p>
-        <div id="popular-list">
+    <div class="current-ghost"></div>
+    <secion class="right-area">
+      <div class="popular-songs-area">
+        <p class="area-title title-center">노래추가</p>
+        <div id = "popular-list">
           <input id="input-search" placeholder="노래제목을 입력하세요.">
-          <button class="search-song-button" onclick="searchSong()" type="submit">검색</button>
+          <button onclick="searchSong()"type="submit">검색</button> 
         </div>
       </div>
       <div class="search-result"></div>

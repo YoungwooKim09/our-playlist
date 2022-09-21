@@ -17,8 +17,10 @@ function deletePlaylist(id) {
 }
 
 function searchSong() {
+  const currentGhost = document.querySelector('.current-ghost');
+  id = currentGhost.getAttribute('modal-id')
   let search_song = $("#input-search").val();
-
+  console.log(id)
   $.ajax({
     type: "POST",
     url: "/search",
@@ -31,7 +33,8 @@ function searchSong() {
           makeSearchList(
             i + 1,
             searchList[i]["song_name"],
-            searchList[i]["song_singer"]
+            searchList[i]["song_singer"],
+            id
           );
         }
       }
@@ -39,24 +42,36 @@ function searchSong() {
   });
 }
 
-function makeSearchList(songName, songArtist) {
-  let tempHtml = `<li>${songName} - ${songArtist}</li>`;
+function makeSearchList(songName, songArtist, playlist_id) {
+  let tempHtml = `<li><span id="add-song">${songName}</span>
+  <span> - </span>
+  <span id="add-artist">${songArtist}</span>
+  <button id="${playlist_id}" class="insert-song-button" onclick="addSong('${songName}','${songArtist}','${playlist_id}')">추가</button>
+  </li>`
   $(".search-result").append(tempHtml);
+
+  // const insertSongButton = document.querySelector('.insert-song-button')
+  // console.log(insertSongButton, playlist_id);
+  // insertSongButton.addEventListener('click', function(){
+    // console.log(playlist_id)
+  // })
 }
 
 // 버튼 추가하여 연결
 
-function addSong() {
-  let song = $("#add-song").text();
-  let artist = $("#add-artist").text();
-  let title = $("#add-title").text();
+function addSong(songName, songArtist, playlist_id) {
+  
+  let song = songName;
+  let artist = songArtist;
+  let id = playlist_id;
+  console.log(song, artist, id)
   // 버튼에 해당하는 텍스트 요소
   // 함수 인자로 id값 사용
 
   $.ajax({
     type: "POST",
     url: "/add/song",
-    data: { song_give: song, artist_give: artist, title_give: title },
+    data: { song_give: song, artist_give: artist, id_give: id },
     success: function (response) {
       // 성공하면
       if (response["result"] == "success") {
