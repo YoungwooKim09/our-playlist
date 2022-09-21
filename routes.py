@@ -8,29 +8,6 @@ import datetime
 client = MongoClient('localhost', 27017)
 db = client.testdb
 
-db.playlists.drop()
-# 더미데이터 초기화
-for number in range(101):
-    user = "user {0}".format(number)
-    title = "{0}번째 playlist A".format(number),
-    db.playlists.insert_one({
-        'user': user,
-        'title': title,
-        'songs':[{'songname':'새삥 (Prod. ZICO) (Feat. 호미들)', 'artist':'지코 (ZICO)'},
-        {'songname':'After LIKE ', 'artist':'IVE'},
-        {'songname':'Attention', 'artist':'NewJeans'},
-        {'songname':'11', 'artist':'111'},
-        {'songname':'22', 'artist':'222'}
-        ]})
-
-# db.playlists.insert_one({
-#     'user':'suyeon',
-#     'title': '힙합 플레이리스트!',
-#     'songs':[
-#     {'songname':'가가가', 'artist':'나나나'}, 
-#     {'songname':'asdf', 'artist':'efef'}, 
-#     {'songname':'jklkj', 'artist':'seffew'}
-#     ]})
 
 @app.route('/')
 def home():
@@ -56,6 +33,14 @@ def listPopularlists():
     
     return jsonify ({'result': 'success', 'popular_playlists': result})
 
+
+
+@app.route('/list/popular', methods=['GET'])
+def listPopularlists():
+
+    result = list(db.playlists.find({}, {'_id': 0}))
+    
+    return jsonify ({'result': 'success', 'popular_playlists': result})
 
 
 @app.route('/add/playlist', methods=['POST'])

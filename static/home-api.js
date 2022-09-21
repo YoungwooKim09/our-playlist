@@ -59,6 +59,43 @@ function showPopularlist() {
 }
 
 function makeList(index, user, title, songs) {
+  let tempHtml_pl = `<div class="playlist-block">
+                        <p class="area-title${index}">${title} by ${user}</p>
+                        <button>펼쳐보기</button>
+                    </div>`;
+  $(".feed").append(tempHtml_pl);
+
+  for (let j = 0; j < songs?.length; j++) {
+    let song_name = songs[j]["songname"];
+    let song_artist = songs[j]["artist"];
+
+    let tempHtml_s = `<p>1. ${song_name} - ${song_artist}</p>`;
+
+    $(`.area-title${index}`).append(tempHtml_s);
+  }
+}
+
+function addPlaylist() {
+  let user = $("#add-user").val();
+  let title = $("#add-playlist").val();
+
+  $.ajax({
+    type: "GET",
+    url: "/list/popular",
+    data: {},
+    success: function (response) {
+      if (response["result"] == "success") {
+        alert("플레이 리스트 만들기 성공!");
+
+        window.location.reload();
+      } else {
+        alert("다시 입력하세요!");
+      }
+    },
+  });
+}
+
+function makeList(index, user, title, songs) {
   let tempHtml_pl = `<li>
                       <div class="playlist-block playlist-block-${index}">
                         <p class="area-title area-title-${index}">${title} by ${user}</p>
