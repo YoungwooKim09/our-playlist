@@ -54,12 +54,6 @@ header {
   font-size: 3rem;
 }
 
-.button-area {
-  margin-left: 10%;
-  display: flex;
-  flex-direction: row;
-}
-
 .home-header-button {
   display: flex;
   justify-content: center;

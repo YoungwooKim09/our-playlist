@@ -61,7 +61,7 @@ def listPopularlists():
 
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
-
+    user_receive = request.form['user_give']
     user_receive = request.form['user_give']
     title_receive = request.form['title_give']
     song_receive = []

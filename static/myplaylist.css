@@ -16,8 +16,29 @@ main {
   align-items: center;
 }
 
+.show-form {
+  display: block;
+}
+
+.create-playlist-form {
+  padding: 20px;
+}
+
+.playlist-title-input {
+  margin-top: 10px;
+  width: 300px;
+  outline: none;
+  border: solid 1px var(--gray-300);
+  border-radius: 4px;
+  padding: 3px;
+}
+
 .create-playlist-button {
   background: none;
   outline: none;
   color: rgba(93, 93, 93, 0.4);
+}
+
+.modal-header {
+  border: none;
 }
