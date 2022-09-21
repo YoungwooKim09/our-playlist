@@ -25,3 +25,22 @@ function selectSortOption(clicked) {
     currentSelectedSortBy = "random";
   }
 }
+
+const homeLoginButton = document.querySelector(".home-button-login");
+
+$(document).ready(function () {
+  if (getUserInfo()) {
+    homeLoginButton.classList.add("hide");
+  }
+});
+
+function getUserInfo() {
+  const cookies = document.cookie?.split("; ");
+  for (let cookie of cookies) {
+    const [name, value] = cookie.split("=");
+    if (name === "userinfo") {
+      userinfo = JSON.parse(value);
+      return userinfo;
+    }
+  }
+}

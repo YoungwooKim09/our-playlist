@@ -114,7 +114,7 @@ function addPlaylist(title, user) {
 
 function showMyPlaylists() {
   let userId = null;
-  const cookies = document.cookie.split("; ");
+  const cookies = document.cookie?.split("; ");
   for (let cookie of cookies) {
     const [name, value] = cookie.split("=");
     if (name === "userinfo") {
