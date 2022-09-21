@@ -110,7 +110,15 @@
             alert('server-connection-fail');
           }
         }
-      }).done(location.href('/'))
+      }).done($.ajax(
+        {
+          type: "GET",
+          url: '/login',
+          success : function(response) {
+            response;
+          }
+        }
+      ))
     }
   </script>
 </head>

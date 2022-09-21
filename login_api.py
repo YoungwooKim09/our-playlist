@@ -9,8 +9,9 @@ import time
 import jwt
 client = MongoClient('localhost', 27017)
 db = client.accountdb
-
+logined = False
 SECRET_KEY = 'WOOPLY'
+
 def check_access_token(access_token):
     print('check_token')
     try:
@@ -47,6 +48,11 @@ def login_confirm(f):
 @login_confirm
 def api_():
     return redirect(url_for('home'))
+
+@app.route('/my-playlist')
+@login_confirm
+def playlist():
+    return render_template('myplaylist.html')
 
 @app.route('/login/api', methods=['POST'])
 def api_login():
