@@ -1,16 +1,78 @@
 let page = 1;
 
 $(document).ready(function () {
-  $(".feed").html("");
   const blocks = document.querySelectorAll(".playlist-block");
-
   for (let i = 0; i < blocks.length; ++i) {
-    const attr = blocks[i].getAttribute("order");
-    blocks[i].classList.add(`songs${attr}`);
+    const attr = blocks[i].getAttribute("playlist-order");
+    blocks[i].classList.add(`songs-${attr}`);
+    let spreadButton = document.querySelector(`.spread-button-${attr}`);
+
+    const toggleSpreadButton = (function (attr, spreadButton) {
+      let spread = false;
+      // 각 아이템이 개별 클로저를 가져야 하므로 (데이터격리) for 루프 순회시 이 함수 객체가 매번 생겨야함 -> 외부로 이동하지 말것
+      let maxCount = 3;
+      return function (attr, spreadButton) {
+        spread = !spread;
+        console.log("clicked", attr, spreadButton, spread);
+        if (spread) {
+          spreadButton.innerHTML = `<i class="fa-solid fa-caret-down"></i> 접기`;
+          maxCount = 20;
+          toggle("fold", "spread", maxCount, attr);
+        } else {
+          spreadButton.innerHTML = `<i class="fa-solid fa-caret-right"></i>
+            펼쳐보기`;
+          maxCount = 3;
+          toggle("spread", "fold", maxCount, attr);
+        }
+      };
+    })();
+
+    spreadButton.addEventListener(
+      "click",
+      toggleSpreadButton.bind(null, attr, spreadButton)
+    );
+  }
+});
+
+function toggle(currentState, nextState, maxCount, attr) {
+  let start;
+  if (currentState === "fold" && nextState === "spread") {
+    start = 3;
+  } else if (currentState === "spread" && nextState === "fold") {
+    start = 0;
+    $(`.songs-${attr}`).html("");
   }
 
-  // showAllplaylists(page);
-});
+  for (let j = start; j < maxCount; j++) {
+    // let song_name = songs[j]["songname"];
+    // let song_artist = songs[j]["artist"];
+    // let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
+    // $(`.songs${attr}`).append(tempHtml_s);
+    // $(`.songs-${attr}`).append("wefewfewf");
+  }
+}
+
+// const toggleSpreadButton = (function (attr, spreadButton) {
+//   console.log("clicked");
+//   let spread = false;
+//   let maxCount = 3;
+//   return function (spreadButton) {
+//     spread = !spread;
+//     if (spread) {
+//       spreadButton.innerHTML = `<i class="fa-solid fa-caret-down"></i> 접기`;
+
+//       maxCount = 20;
+//       toggle("fold", "spread", maxCount, attr);
+//     } else {
+//       spreadButton.innerHTML = `<i class="fa-solid fa-caret-right"></i>
+//         펼쳐보기`;
+
+//       maxCount = 3;
+//       $(`.songs${attr}`).html("");
+//       toggle("spread", "fold", maxCount, attr);
+//     }
+//   };
+// })();
 
 $(window).scroll(function () {
   var scrolltop = $(window).scrollTop();
@@ -19,48 +81,6 @@ $(window).scroll(function () {
     showAllplaylists(++page);
   }
 });
-
-function toggle(currentState, nextState, maxCount) {
-  // const block = document
-  //   .querySelectorAll(".playlist-block")[0]
-  //   .getAttribute("order");
-
-  let start;
-  if (currentState === "fold" && nextState === "spread") {
-    start = 3;
-  } else if (currentState === "spread" && nextState === "fold") {
-    start = 0;
-    $(`.songs${index}`).html("");
-  }
-
-  // for (let j = start; j < maxCount; j++) {
-  //   let song_name = songs[j]["songname"];
-  //   let song_artist = songs[j]["artist"];
-  //   let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
-
-  //   $(`.songs${index}`).append(tempHtml_s);
-  // }
-}
-
-const toggleSpreadButton = (function () {
-  let spread = false;
-  let maxCount = 3;
-  return function () {
-    spread = !spread;
-    if (spread) {
-      spreadButton.innerHTML = `<i class="fa-solid fa-caret-down"></i> 접기`;
-      maxCount = 20;
-      toggle("fold", "spread", maxCount);
-    } else {
-      spreadButton.innerHTML = `<i class="fa-solid fa-caret-right"></i> 펼쳐보기`;
-      maxCount = 3;
-      toggle("spread", "fold", maxCount);
-    }
-  };
-})();
-
-let spreadButton = document.querySelector(`.spread-button`);
-spreadButton.addEventListener("click", toggleSpreadButton.bind(null));
 
 function showAllplaylists(page) {
   console.log("currentpage : ", page);
@@ -85,6 +105,20 @@ function showAllplaylists(page) {
   });
 }
 
+// function getAllPlaylists(page) {
+//   return $.ajax({
+//     type: "GET",
+//     url: `/list/all`,
+//     data: { page: page },
+//     success: function (response) {
+//       if (response["result"] == "success") {
+//         all_playlists = response["all_playlists"];
+//         data = all_playlists;
+//       }
+//     },
+//   });
+// }
+
 function showPopularlist() {
   $.ajax({
     type: "GET",
@@ -105,7 +139,7 @@ function showPopularlist() {
 
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<li>
-                      <div class="playlist-block playlist-block${index}">
+                      <div class="playlist-block playlist-block-${index}">
                         <p class="area-title area-title${index}">${title} by ${user}</p>
                         <ul class="songs${index}"></ul>
                       </div>
@@ -119,10 +153,10 @@ function makeList(index, user, title, songs) {
 
     let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-    $(`.songs${index}`).append(tempHtml_s);
+    $(`.songs-${index}`).append(tempHtml_s);
   }
-  let spreadButtonHtml = `<button class="spread-button spread-button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
-  $(`.playlist-block${index}`).append(spreadButtonHtml);
+  let spreadButtonHtml = `<button class="spread-button spread-button-${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
+  $(`.playlist-block-${index}`).append(spreadButtonHtml);
 }
 
 function addPlaylist() {

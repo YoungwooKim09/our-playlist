@@ -52,18 +52,20 @@
       <ul class="feed">
         {% for item in playlists %}
         <li>
-          <div order="{{ loop.index }}" class="playlist-block playlist-block {{ loop.index }}">
-            <p class="area-title area-title {{ loop.index }}">{{ item.title }} by {{ item.user }}</p>
-            <ul class="songs {{ loop.index }}">
+          <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
+            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.user}}</p>
+            <ul class="songs-{{loop.index}}">
               {% for song in item.songs %}
-              <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}</li>
-              {% endfor %}
-            </ul>
-            <button class="spread-button spread-button{{loop.index}}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기
-            </button>
-          </div>
+              {% if loop.index <= 3 %} <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}
         </li>
+        {% endif %}
         {% endfor %}
+      </ul>
+      <button class="spread-button spread-button-{{loop.index}}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기
+      </button>
+      </div>
+      </li>
+      {% endfor %}
       </ul>
     </secion>
     <secion class="right-area">
