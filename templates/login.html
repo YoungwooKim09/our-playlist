@@ -88,10 +88,8 @@
         }
       })
     }
-    function tokenization() {
-      let jwt = require("jsonwebtoken");
-      let secretObj = require("../config/jwt")
-
+    function createCookie(value) {
+      document.cookie = value
     }
     function log_in() {
 
@@ -103,15 +101,19 @@
         data: { id_return: id, pw_return: pw },
         success: function (response) {
           if (response['result'] == 'success') {
-            // alert('log-in-success');
+            alert('log-in-success');
             console.log(id, pw);
             alert(response['msg'])
+            if(response['token']){
+              createCookie(response['token'])
+            }
           }
           else {
             alert('log-in-fail');
           }
         }
       })
+      // location.reload() 
       return false;
     }
   </script>
