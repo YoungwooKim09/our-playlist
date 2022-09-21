@@ -46,17 +46,35 @@ def listAllplaylists():
         foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
         return jsonify ({'result': 'success', 'all_playlists': foundElements})
 
+@app.route('/list/popular', methods=['GET'])
+def listPopularlists():
+
+    result = list(db.playlists.find({}, {'_id': 0}))
+    
+    return jsonify ({'result': 'success', 'popular_playlists': result})
+
+
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
 
     user_receive = request.form['user_give']
     title_receive = request.form['title_give']
     song_receive = []
-    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'time_receive' : 0}
+    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'created_at' : 0}
 
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})
+
+
+@app.route('/delete/playlist', methods=['POST'])
+def deletePlaylist():
+
+    delete_receive = request.form['delete_give']
+    db.playlists.delete_one({'title': delete_receive})
+
+    return jsonify ({'result': 'success'})
+
 
 @app.route('/add/song', methods=['POST'])
 def addSong():
@@ -67,9 +85,9 @@ def addSong():
 
     addSong = {'songname': song_receive, 'artist': artist_receive}
     playlists = playlists['songs'].append(addSong)
-    # time_receive 업데이트
-    # songs 딕셔너리 추가
-    db.playlists.update_one({'user': 'user_receive'},{'$set':{'time':time_receive}})
+    
+    db.playlists.update_one({'user': 'user_receive'},{'$set':{'created_at':time_receive}})
+    # 해당 Playlist 특정 기능
 
 
 @app.route('/search', methods=['POST'])
@@ -90,3 +108,4 @@ def searchList():
     search_song_artist = list(search_artist_list.text)
 
     return jsonify ({'result': 'success'}, {'search_song_name_list': search_song_name})
+    # '노래 제목 : 가수' 형태로 데이터 전달 구현

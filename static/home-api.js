@@ -36,6 +36,26 @@ function showAllplaylists(page) {
   });
 }
 
+function showPopularlist() {
+  
+  $.ajax({
+    type: "GET",
+    url: "/list/popular",
+    data: {},
+    success: function (response) {
+      // 성공하면
+      if (response["result"] == "success") {
+        alert("포스팅 성공!");
+        // 3. 성공 시 페이지 새로고침하기
+        window.location.reload();
+      } else {
+        alert("다시 입력하세요!");
+      }
+    },
+  });
+}
+
+
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<div class="playlist-block">
                         <p class="area-title${index}">${title} by ${user}</p>
@@ -62,10 +82,10 @@ function addPlaylist() {
     url: "/add/playlist",
     data: { user_give: user, title_give: title },
     success: function (response) {
-      // 성공하면
+      
       if (response["result"] == "success") {
-        alert("포스팅 성공!");
-        // 3. 성공 시 페이지 새로고침하기
+        alert("플레이 리스트 만들기 성공!");
+        
         window.location.reload();
       } else {
         alert("다시 입력하세요!");
