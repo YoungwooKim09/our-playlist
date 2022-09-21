@@ -49,3 +49,18 @@ function keyPress(event) {
     savePlayList();
   }
 }
+
+const addSongButtons = document.querySelectorAll(".add-song-button");
+console.log(addSongButtons);
+for (let i = 0; i < addSongButtons?.length; ++i) {
+  addSongButtons[i].addEventListener("click", function () {
+    const order = i + 1;
+    const item = document.querySelector(`.add-song-button-${order}`);
+    const id = item.getAttribute("button-id");
+    openModal(id);
+  });
+}
+
+function openModal(id) {
+  console.log("플레이리스트 id", id);
+}

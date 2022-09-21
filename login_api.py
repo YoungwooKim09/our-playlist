@@ -61,7 +61,7 @@ def playlist():
     user_id = request.headers.get('Cookie').split('"id":')[1].split(',')[0].split('"')[1]
     print('user_id', user_id)
     if user_id is not None:
-        playlists = list(testdb.playlists.find({'user': user_id}, {'_id': 0}))
+        playlists = list(testdb.playlists.find({'user': user_id}))
         print(playlists)
         return render_template('myplaylist.html', playlists = playlists)
     else:

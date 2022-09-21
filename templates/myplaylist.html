@@ -53,7 +53,8 @@
         <!-- 나의 플레이리스트 조회 API 추가 -->
         {% for item in playlists %}
         <li class="my-playlist-item">
-          <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
+          <div area-id="{{item._id}}" playlist-order="{{loop.index}}"
+            class="playlist-block playlist-block-{{loop.index}}">
             <p class="area-title area-title {{ loop.index }}">{{item.title}}</p>
             <ul class="songs-{{loop.index}}">
               {% for song in item.songs %}
@@ -61,8 +62,10 @@
                 {% endfor %}
             </ul>
           </div>
-          <button class="btn btn-primary ml-6 add-button-{{loop.index}}">추가</button>
-          <button class="btn btn-danger ml-6 delete-button-{{loop.index}}">삭제 </button>
+          <button button-id="{{item._id}}" playlist-order="{{loop.index}}"
+            class="btn btn-primary ml-6 add-song-button add-song-button-{{loop.index}}">추가</button>
+          <button button-id="{{item._id}}" playlist-order="{{loop.index}}"
+            class="btn btn-danger ml-6 delete-song-button delete-song-button-{{loop.index}}">삭제 </button>
 
         </li>
         {% endfor %}
