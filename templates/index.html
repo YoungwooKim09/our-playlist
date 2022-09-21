@@ -49,7 +49,18 @@
           랜덤
         </button>
       </div>
-      <ul class="feed"></ul>
+      <ul class="feed">
+        {% for item in playlists %}
+        <li>
+          <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
+            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.user}}</p>
+            <ul class="songs-{{loop.index}}">
+              {% for song in item.songs %}
+              {% if loop.index <= 3 %} <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
     </secion>
     <secion class="right-area">
       <div class="popular-songs-area">
