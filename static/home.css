@@ -1,9 +1,3 @@
-.button-area {
-  margin-left: 10%;
-  display: flex;
-  flex-direction: row;
-}
-
 main {
   margin-top: 50px;
   padding: 0 20%;

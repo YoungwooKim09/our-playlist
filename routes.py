@@ -61,12 +61,10 @@ def listPopularlists():
 
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
-    user_receive = request.form['user_give']
-    user_receive = request.form['user_give']
-    title_receive = request.form['title_give']
-    song_receive = []
-    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'created_at' : 0}
+    title = request.form['title']
+    user = request.form['user']
 
+    playlist = {'user': user, 'title': title,'created_at' : 0}
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})

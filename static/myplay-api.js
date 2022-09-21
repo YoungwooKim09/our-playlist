@@ -61,17 +61,12 @@ function addSong() {
   });
 }
 
-function addPlaylist() {
-  let playlistTitle = $("#playlist-title").text();
-  let song = $("#add-song").text();
-  let artist = $("#add-artist").text();
-  // 버튼에 해당하는 텍스트 요소
-  // 함수 인자로 id값 사용
-
+function addPlaylist(title, user) {
+  console.log("add playlist 호출");
   $.ajax({
     type: "POST",
     url: "/add/playlist",
-    data: { song_give: song, artist_give: artist },
+    data: { title: title, user: user },
     success: function (response) {
       // 성공하면
       if (response["result"] == "success") {
