@@ -47,9 +47,10 @@ def addPlaylist():
 def listMyplaylist():
     user_id = request.args.get('user_id')
     playlists = list(db.playlists.find({'user_id': user_id}, {'_id': 0}))
-    return my_playlist_api.renderMyPlaylist(user_id)
+
+    # return my_playlist_api.renderMyPlaylist(user_id)
     # return render_template('index.html', playlists = [1,2,3,4])
-    # return jsonify ({'result': 'success', 'list_myplaylist': playlists})
+    return jsonify ({'result': 'success', 'list_myplaylist': playlists})
 
 @app.route('/delete/playlist', methods=['POST'])
 def deletePlaylist():
