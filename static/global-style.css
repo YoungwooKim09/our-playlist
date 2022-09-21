@@ -13,8 +13,20 @@ button {
   cursor: pointer;
 }
 
+a {
+  cursor: pointer;
+}
+
 a:hover {
   color: var(--black-100);
+}
+
+.hide {
+  display: none;
+}
+
+a.hide {
+  display: none;
 }
 
 header {
@@ -42,16 +54,16 @@ header {
 }
 
 .button-area {
+  margin-left: 10%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
 }
 
-.home-button-login {
+.home-header-button {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
-  width: 80px;
   height: 45px;
   display: flex;
   justify-content: center;
@@ -59,9 +71,11 @@ header {
   /* border: solid 2px black; */
   border-radius: 6px;
   color: var(--white-100);
+  padding: 3px 20px;
+  margin: 0 10px;
 }
 
-.home-button-login:hover {
+.home-header-button:hover {
   background-color: var(--white-100);
   border: solid 2px var(--black-100);
 }

@@ -49,6 +49,7 @@ main {
 }
 
 .right-area {
+  margin-top: 100px;
   position: relative;
   margin-left: 20%;
   display: flex;
