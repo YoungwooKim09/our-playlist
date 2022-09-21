@@ -59,8 +59,8 @@
                 {% endfor %}
             </ul>
           </div>
-          <button class="btn btn-primary ml-6">추가</button>
-          <button class="btn btn-danger ml-6">삭제 </button>
+          <button class="btn btn-primary ml-6 add-button-{{loop.index}}">추가</button>
+          <button class="btn btn-danger ml-6 delete-button-{{loop.index}}">삭제 </button>
 
         </li>
         {% endfor %}
