@@ -32,9 +32,9 @@ def login_confirm(f):
         if access_token is not None:
             payload = check_access_token(access_token)
             if payload is None:
-                return Response(status=401)
+                return render_template('login.html')
         else:
-            return Response(status=401)
+            return render_template('login.html')
         return f(*args, **kwagrs)
     return deco_func
 
@@ -43,19 +43,10 @@ def login_confirm(f):
 #     print('login confirm')
 #     return redirect(url_for('/'))
 
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
 @app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/login/id')
 @login_confirm
 def api_():
-    return render_template('index.html')
+    return redirect(url_for('home'))
 
 @app.route('/login/api', methods=['POST'])
 def api_login():
