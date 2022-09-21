@@ -26,15 +26,6 @@ def listAllplaylists():
         foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
         return jsonify ({'result': 'success', 'all_playlists': foundElements})
 
-
-@app.route('/list/popular', methods=['GET'])
-def listPopularlists():
-
-    result = list(db.playlists.find({}, {'_id': 0}))
-    
-    return jsonify ({'result': 'success', 'popular_playlists': result})
-
-
 @app.route('/list/popular', methods=['GET'])
 def listPopularlists():
 
