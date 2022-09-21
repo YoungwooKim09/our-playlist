@@ -24,9 +24,11 @@ function savePlayList() {
   addPlaylist(title, dummyUser);
 }
 
-createPlaylistForm.addEventListener("keypress", keypress);
+createPlaylistForm.addEventListener("keydown", keyPress);
 
-function keypress(event) {
-  event.preventDefault();
-  console.log(event.key);
+function keyPress(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    savePlayList();
+  }
 }

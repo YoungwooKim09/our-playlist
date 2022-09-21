@@ -24,6 +24,10 @@ main {
   padding: 20px;
 }
 
+.playlist-title {
+  font-size: 1.2rem;
+}
+
 .playlist-title-input {
   margin-top: 10px;
   width: 300px;
@@ -41,4 +45,20 @@ main {
 
 .modal-header {
   border: none;
+}
+
+.create-playlist-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+button.save-playlist {
+  margin-top: 20px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  min-height: 45px;
+  padding: 1px 13px;
+  background-color: var(--black-100);
+  color: var(--white-100);
 }
