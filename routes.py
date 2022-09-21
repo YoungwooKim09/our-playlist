@@ -34,19 +34,22 @@ for number in range(101):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    playlists = listAllplaylists(1)
+    return render_template('index.html', playlists = playlists)
 
 
 @app.route('/list/all', methods=['GET'])
-def listAllplaylists():
-    page = request.args.get('page')
-    if  page != None:
-        page = int(page) 
-        foundElements = list(db.playlists.find({}, {'_id': 0}).skip((int(page) - 1) * 10).limit(10))
-        return jsonify ({'result': 'success', 'all_playlists': foundElements})
-    else:
-        foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
-        return jsonify ({'result': 'success', 'all_playlists': foundElements})
+def listAllplaylists(page):
+    foundElements = list(db.playlists.find({}, {'_id': 0}).skip((page - 1) * 10).limit(10))
+    return foundElements
+    # page = request.args.get('page')
+    # if  page != None:
+    #     page = int(page) 
+    #     foundElements = list(db.playlists.find({}, {'_id': 0}).skip((int(page) - 1) * 10).limit(10))
+    #     return jsonify ({'result': 'success', 'all_playlists': foundElements})
+    # else:
+    #     foundElements = list(db.playlists.find({}, {'_id': 0}).sort('created_at', -1))
+    #     return jsonify ({'result': 'success', 'all_playlists': foundElements})
 
 
 @app.route('/list/popular', methods=['GET'])

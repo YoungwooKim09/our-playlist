@@ -1,9 +1,9 @@
 let page = 1;
 
-$(document).ready(function () {
-  $(".feed").html("");
-  showAllplaylists(page);
-});
+// $(document).ready(function () {
+//   $(".feed").html("");
+//   showAllplaylists(page);
+// });
 
 $(window).scroll(function () {
   var scrolltop = $(window).scrollTop();
