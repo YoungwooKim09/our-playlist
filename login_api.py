@@ -33,10 +33,10 @@ def check_access_token(access_token):
 def login_confirm(f):
     @wraps(f)
     def deco_func(*args, **kwagrs):
-        access_token = request.headers.get('Cookie').split("; ")[1]
+        access_token = request.headers.get('Cookie')
         # print(access_token)
         if access_token is not None:
-            payload = check_access_token(access_token)
+            payload = check_access_token(access_token.split("; ")[1])
             if payload is None:
                 return render_template('login.html')
         else:
@@ -58,10 +58,10 @@ def api_():
 @app.route('/my-playlist')
 @login_confirm
 def playlist():
-    user_id = request.headers.get('Cookie').split('"id":')[1].split(',')[0].split('"')[1]
-    print('user_id', user_id)
-    if user_id is not None:
-        playlists = list(testdb.playlists.find({'user': user_id}))
+    cookie = request.headers.get('Cookie')
+    print('cookie', cookie)
+    if cookie is not None:
+        playlists = list(testdb.playlists.find({'user': cookie.split('"id":')[1].split(',')[0].split('"')[1]}))
         print(playlists)
         return render_template('myplaylist.html', playlists = playlists)
     else:
