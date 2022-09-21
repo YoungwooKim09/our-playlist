@@ -1,5 +1,4 @@
 
-
 function deletePlaylist(index) {
     
     let delete_title = $("." + `area-title${index}`).text;

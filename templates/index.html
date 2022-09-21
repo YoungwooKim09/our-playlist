@@ -11,10 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Roboto&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/static/global-color.css">
+  <link rel="stylesheet" href="/static/global-style.css" />
   <link rel="stylesheet" href="/static/home.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.tailwindcss.com">
   </script>
+  <script src="https://kit.fontawesome.com/22dd7848de.js" crossorigin="anonymous"></script>
   <title>우플리</title>
 </head>
 
@@ -27,8 +29,11 @@
         </h1>
       </div>
       <div class="button-area">
-        <a href="/login" class="home-button-login">
+        <a href="/login" class="home-header-button home-button-login">
           로그인
+        </a>
+        <a href="/my-playlist" class="home-header-button home-button-makeplaylist hide">
+          플리 만들기
         </a>
       </div>
     </div>
@@ -44,10 +49,7 @@
           랜덤
         </button>
       </div>
-      <div class="feed">
-        <div class="playlist-block">
-
-        </div>
+      <ul class="feed"></ul>
     </secion>
     <secion class="right-area">
       <div class="popular-songs-area">

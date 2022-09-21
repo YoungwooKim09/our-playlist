@@ -1,13 +1,177 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+  <title>우플리-로그인</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script>
+
+  </script>
+  <style>
+    .padding-box {
+      margin: auto;
+      width: 500px;
+    }
+
+    .pad {
+      margin-top: 100px;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: black;
+      border-color: black;
+    }
+
+    .btn-group {
+      width: 100%;
+    }
+
+    .contents-box {
+      margin-top: 10px;
+    }
     
-    <title>우플리</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-  </body>
+    a.gohome:link{
+      color: #000;
+      text-decoration : none;
+
+    }
+  </style>
+  <script>
+    function login_open() {
+      let status = $('#log-in-box').css('display')
+      if (status == 'none') {
+        $('#log-in-box').show()
+        $('#sign-up-box').hide()
+        $('#log-in-btn').css('background-color', 'black');
+        $('#log-in-btn').css('color', 'white');
+        $('#sign-up-btn').css('background-color', 'white');
+        $('#sign-up-btn').css('color', 'black');
+      }
+    }
+    function signup_open() {
+      let status = $('#sign-up-box').css('display')
+      if (status == 'none') {
+        $('#sign-up-box').show()
+        $('#log-in-box').hide()
+        $('#sign-up-btn').css('background-color', 'black');
+        $('#sign-up-btn').css('color', 'white');
+        $('#log-in-btn').css('background-color', 'white');
+        $('#log-in-btn').css('color', 'black');
+      }
+    }
+    function sign_up() {
+      let id = $('#sign-up-email').val();
+      let pw = $('#sign-up-pw').val();
+      let name = $('#sign-up-name').val();
+
+      $.ajax({
+        type: "POST",
+        url: '/login/register',
+        data: {
+          id_return: id, pw_return: pw, name_return: name
+        },
+        success: function (response) {
+          console.log(response)
+          if (response['result'] == 'success') {
+            alert('가입 완료!')
+          } else {
+            alert('실패!')
+          }
+        }
+      })
+    }
+    function tokenization() {
+      let jwt = require("jsonwebtoken");
+      let secretObj = require("../config/jwt")
+
+    }
+    function log_in() {
+
+      let id = $('#log-in-email').val();
+      let pw = $('#log-in-pw').val();
+      $.ajax({
+        type: "POST",
+        url: '/login/api',
+        data: { id_return: id, pw_return: pw },
+        success: function (response) {
+          if (response['result'] == 'success') {
+            // alert('log-in-success');
+            console.log(id, pw);
+            alert(response['msg'])
+          }
+          else {
+            alert('log-in-fail');
+          }
+        }
+      })
+      return false;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="pad">
+    <div class="padding-box" style="font-family: 'Nanum Gothic', sans-serif;">
+      <a  class="gohome" href="/">
+        <h1 style="text-align: center;">
+          우리들의 플레이 리스트
+        </h1>
+      </a>
+
+      <br>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button onclick="login_open()" id="log-in-btn" type="button" class="btn btn-primary">로그인</button>
+        <button onclick="signup_open()" id="sign-up-btn" type="button" class="btn btn-primary"
+          style="background-color: white; color : black">회원가입</button>
+      </div>
+      <div class="contents-box">
+        <div class="login-box" id="log-in-box">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="log-in-email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="log-in-pw">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          </div>
+          <button onclick="log_in()" class="btn btn-primary">로그인</button>
+        </div>
+        <div class="signup-box" id="sign-up-box" style="display: none;">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="sign-up-email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="sign-up-pw">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">사용자 이름</label>
+            <input class="form-control" id="sign-up-name">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck2">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          </div>
+          <button onclick="sign_up()" type="submit" class="btn btn-primary">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
