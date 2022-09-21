@@ -56,7 +56,7 @@ def api_():
     return redirect(url_for('home'))
 
 @app.route('/my-playlist')
-@login_confirm
+# @login_confirm
 def playlist():
     user_id = request.headers.get('Cookie').split('"id":')[1].split(',')[0].split('"')[1]
     print('user_id', user_id)
