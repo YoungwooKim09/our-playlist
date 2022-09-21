@@ -3,7 +3,6 @@ let page = 1;
 $(document).ready(function () {
   $(".feed").html("");
   showAllplaylists(page);
-  
 });
 
 let firstScroll = true;
@@ -118,24 +117,4 @@ function makeList(index, user, title, songs) {
       $(`.songs-${index}`).append(tempHtml_s);
     }
   }
-}
-
-function addPlaylist() {
-  let user = $("#add-user").val();
-  let title = $("#add-playlist").val();
-
-  $.ajax({
-    type: "POST",
-    url: "/add/playlist",
-    data: { user_give: user, title_give: title },
-    success: function (response) {
-      if (response["result"] == "success") {
-        alert("플레이 리스트 만들기 성공!");
-        window.location.reload();
-
-      } else {
-        alert("다시 입력하세요!");
-      }
-    },
-  });
 }
