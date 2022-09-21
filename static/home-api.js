@@ -1,8 +1,8 @@
 let page = 1;
 
 $(document).ready(function () {
-  $(".feed").html("");
-  showAllplaylists(page);
+  // $(".feed").html("");
+  // showAllplaylists(page);
 });
 
 let firstScroll = true;
