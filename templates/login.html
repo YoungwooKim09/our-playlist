@@ -12,6 +12,8 @@
   <title>우플리-로그인</title>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript" src="/static/data.js"></script>
+  <script>
+    console.log(userInfo.getUserInfo());
 
   </script>
   <style>
@@ -37,10 +39,10 @@
     .contents-box {
       margin-top: 10px;
     }
-    
-    a.gohome:link{
+
+    a.gohome:link {
       color: #000;
-      text-decoration : none;
+      text-decoration: none;
 
     }
   </style>
@@ -88,8 +90,9 @@
         }
       })
     }
-    function createCookie(value) {
-      document.cookie = value
+    function createCookie(resToken, resUserInfo) {
+      document.cookie = resToken
+      document.cookie = `userinfo = ${JSON.stringify(resUserInfo)}`
     }
     function log_in() {
 
@@ -100,12 +103,11 @@
         url: '/login/api',
         data: { id_return: id, pw_return: pw },
         success: function (response) {
+          console.log("success")
           if (response['result'] == 'success') {
             alert(response['msg'])
-            if(response['token']){
-              createCookie(response['token']);
-              user_info = response['info']
-              console.log(user_info)
+            if (response['token']) {
+              createCookie(response['token'], response['info']);
               location.replace('/');
             }
           }
@@ -121,7 +123,7 @@
 <body>
   <div class="pad">
     <div class="padding-box" style="font-family: 'Nanum Gothic', sans-serif;">
-      <a  class="gohome" href="/">
+      <a class="gohome" href="/">
         <h1 style="text-align: center;">
           우리들의 플레이 리스트
         </h1>
@@ -175,6 +177,7 @@
   </div>
 </body>
 <script>
-  
+
 </script>
+
 </html>
