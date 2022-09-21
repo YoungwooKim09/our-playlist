@@ -39,12 +39,29 @@
     </div>
   </header>
   <main>
-    <button type="button" class="create-playlist-button" data-toggle="modal" data-target="#exampleModal">
-      <i class="fa-solid fa-circle-plus fa-6x"></i>
-    </button>
-    <!-- <button type="button" class="btn btn-primary create-playlist-button" data-toggle="modal"
-      data-target="#exampleModal">
-    </button> -->
+    <secion class="playlists-area">
+      <div class="create-button-area">
+        <button type="button" class="create-playlist-button" data-toggle="modal" data-target="#exampleModal">
+          <i class="fa-solid fa-circle-plus fa-6x"></i>
+        </button>
+      </div>
+      <ul class="feed">
+        <!-- 나의 플레이리스트 조회 API 추가 -->
+        {% for item in playlists %}
+        <li>
+          <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
+            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.user}}</p>
+            <ul class="songs-{{loop.index}}">
+              {% for song in item.songs %}
+              <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}
+                {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </secion>
+
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
