@@ -33,15 +33,6 @@ def listPopularlists():
     return jsonify ({'result': 'success', 'popular_playlists': popular_playlists})
 
 
-@app.route('/list/myplaylist', methods=['POST'])
-def listMyplaylist():
-    user_info = request.form['user_info']
-
-    result = list(db.playlists.find({'user_info': user_info}, {'_id': 0}))
-    
-    return jsonify ({'result': 'success', 'list_myplaylist': result})
-
-
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
     title = request.form['title']
