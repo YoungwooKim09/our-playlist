@@ -20,7 +20,6 @@ $(window).scroll(function () {
 
 let playlistIndex = 0;
 function showAllplaylists(page) {
-  console.log("currentpage : ", page);
   $.ajax({
     type: "GET",
     url: `/list/all`,
@@ -60,7 +59,6 @@ function showPopularlist() {
 }
 
 function makeList(index, user, title, songs) {
-  console.log(index);
   let tempHtml_pl = `<li>
                       <div class="playlist-block playlist-block-${index}">
                         <p class="area-title area-title-${index}">${title} by ${user}</p>
@@ -107,15 +105,16 @@ function makeList(index, user, title, songs) {
       start = 3;
     } else if (currentState === "spread" && nextState === "fold") {
       start = 0;
-      $(`.songs${index}`).html("");
+      $(`.songs-${index}`).html("");
     }
 
+    console.log();
     for (let j = start; j < showCount; j++) {
       let song_name = songs[j]["songname"];
       let song_artist = songs[j]["artist"];
       let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-      $(`.songs${index}`).append(tempHtml_s);
+      $(`.songs-${index}`).append(tempHtml_s);
     }
   }
 }
