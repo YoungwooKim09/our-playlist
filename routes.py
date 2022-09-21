@@ -13,8 +13,6 @@ def home():
     playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
     return render_template('index.html', playlists = playlists)
 
-
-
 @app.route('/list/all', methods=['GET'])
 def listAllplaylists():
     page = request.args.get('page')
@@ -44,14 +42,12 @@ def addPlaylist():
 
     return jsonify ({'result': 'success'})
 
-@app.route('/list/myplaylist', methods=['POST'])
+@app.route('/list/myplaylist', methods=['GET'])
 def listMyplaylist():
-    user_info = request.form['user_info']
-
-    result = list(db.playlists.find({'user_info': user_info}, {'_id': 0}))
-    
-    return jsonify ({'result': 'success', 'list_myplaylist': result})
-
+    user_id = request.args.get('user_id')
+    playlists = list(db.playlists.find({'user_id': user_id}, {'_id': 0}))
+    return render_template('myplaylist.html', playlists = playlists)
+    # return jsonify ({'result': 'success', 'list_myplaylist': playlists})
 
 @app.route('/delete/playlist', methods=['POST'])
 def deletePlaylist():
