@@ -57,7 +57,7 @@ function showPopularlist() {
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<li>
                       <div class="playlist-block playlist-block${index}">
-                        <p class="area-title${index}">${title} by ${user}</p>
+                        <p class="area-title area-title${index}">${title} by ${user}</p>
                         <ul class="songs${index}"></ul>
                       </div>
                     </li>`;
@@ -72,7 +72,7 @@ function makeList(index, user, title, songs) {
 
     $(`.songs${index}`).append(tempHtml_s);
   }
-  let spreadButtonHtml = `<button class="spread__button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
+  let spreadButtonHtml = `<button class="spread-button spread-button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
   $(`.playlist-block${index}`).append(spreadButtonHtml);
 
   const toggleSpreadButton = (function () {
@@ -92,7 +92,7 @@ function makeList(index, user, title, songs) {
     };
   })();
 
-  let spreadButton = document.querySelector(`.spread__button${index}`);
+  let spreadButton = document.querySelector(`.spread-button${index}`);
   spreadButton.addEventListener("click", toggleSpreadButton.bind(null, index));
 
   function toggle(currentState, nextState, showCount) {

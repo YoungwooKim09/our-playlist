@@ -68,21 +68,24 @@ main {
   margin-top: 100px;
 }
 
+.sort-tab-area {
+  width: 40%;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--white-100);
+  padding-bottom: 50px;
+}
+
 .feed {
   margin-top: 80px;
 }
 
 .playlist-block {
   margin-top: 50px;
-}
-
-.sort-tab-area {
-  position: fixed;
-  width: 45%;
-  display: flex;
-  justify-content: space-around;
-  background-color: var(--white-100);
-  padding-bottom: 50px;
+  border: solid 1px var(--gray-300);
+  border-radius: 8px;
+  padding: 2% 5%;
 }
 
 .sort-by {
@@ -117,6 +120,10 @@ main {
 
 .title-center {
   text-align: center;
+}
+
+.spread-button {
+  margin-top: 10px;
 }
 
 .popular-songs-area {
