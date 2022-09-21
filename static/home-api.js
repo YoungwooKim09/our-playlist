@@ -48,15 +48,24 @@ function showPopularlist() {
     success: function (response) {
       // 성공하면
       if (response["result"] == "success") {
-        alert("포스팅 성공!");
-        // 3. 성공 시 페이지 새로고침하기
-        window.location.reload();
-      } else {
-        alert("다시 입력하세요!");
+        
+        popularList = response['popular_playlists'];
+        for (i = 0; i < popularList.length; i++) {
+          makePopularList(i+1, popularList[i]['songname'], popularList[i]['artist'])
+        } 
       }
     },
   });
 }
+
+function makePopularList(index, songname, artist) {
+  let tempHtml =    `<div class="popular-songs-area">
+                      <p class="area-title title-center">가장 많이 담긴 곡</p>
+                      <p>${index}. ${songname} - ${artist}</p>
+                    </div>`
+  $("section.right-area").append(tempHtml);
+}
+// line 63-64 해결하기 : 미리 만들어놓기
 
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<div class="playlist-block">

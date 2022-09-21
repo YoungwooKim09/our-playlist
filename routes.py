@@ -8,7 +8,6 @@ import datetime
 client = MongoClient('localhost', 27017)
 db = client.testdb
 
-
 @app.route('/')
 def home():
     playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
@@ -29,28 +28,26 @@ def listAllplaylists():
 @app.route('/list/popular', methods=['GET'])
 def listPopularlists():
 
-    result = list(db.playlists.find({}, {'_id': 0}))
+    popular_playlists = list(db.songlists.find({}, {'_id': 0}).sort('like', -1))
     
-    return jsonify ({'result': 'success', 'popular_playlists': result})
+    return jsonify ({'result': 'success', 'popular_playlists': popular_playlists})
 
 
+@app.route('/list/myplaylist', methods=['POST'])
+def listMyplaylist():
+    user_info = request.form['user_info']
 
-@app.route('/list/popular', methods=['GET'])
-def listPopularlists():
-
-    result = list(db.playlists.find({}, {'_id': 0}))
+    result = list(db.playlists.find({'user_info': user_info}, {'_id': 0}))
     
-    return jsonify ({'result': 'success', 'popular_playlists': result})
+    return jsonify ({'result': 'success', 'list_myplaylist': result})
 
 
 @app.route('/add/playlist', methods=['POST'])
 def addPlaylist():
+    title = request.form['title']
+    user = request.form['user']
 
-    user_receive = request.form['user_give']
-    title_receive = request.form['title_give']
-    song_receive = []
-    playlist = {'user': user_receive, 'title': title_receive, 'songs': song_receive, 'created_at' : 0}
-
+    playlist = {'user': user, 'title': title,'created_at' : 0}
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})
@@ -74,9 +71,9 @@ def deletePlaylist():
 @app.route('/add/song', methods=['POST'])
 def addSong():
 
-    title_receive = request.form['title_give']
     song_receive = request.form['song_give']
     artist_receive = request.form['artist_give']
+    title_receive = request.form['title_give']
     time_receive = datetime.datetime.utcnow()
 
     addSong = {'songname': song_receive, 'artist': artist_receive}
@@ -85,6 +82,14 @@ def addSong():
     target['songs'].append(addSong)
     
     db.playlists.update_one({'title': title_receive},{'$set':{'created_at':time_receive}})
+
+    sameornot = db.songlists.find_one({'songname': song_receive}, {'artist': artist_receive})
+    
+    if sameornot is None :
+        db.songlists.insert_one(addSong)
+    else :
+        new_like = sameornot['like'] + 1
+        db.songlists.update_one({'songname': song_receive}, {'artist': artist_receive}, {'$set':{'like': new_like}})
 
     return jsonify ({'result': 'success'})
 
