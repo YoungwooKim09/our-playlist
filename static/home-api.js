@@ -55,19 +55,21 @@ function showPopularlist() {
 }
 
 function makeList(index, user, title, songs) {
-  let tempHtml_pl = `<div class="playlist-block playlist-block${index}">
+  let tempHtml_pl = `<li>
+                      <div class="playlist-block playlist-block${index}">
                         <p class="area-title${index}">${title} by ${user}</p>
-                        
-                    </div>`;
+                        <ul class="songs${index}"></ul>
+                      </div>
+                    </li>`;
   $(".feed").append(tempHtml_pl);
 
   for (let j = 0; j < songs?.length; j++) {
     let song_name = songs[j]["songname"];
     let song_artist = songs[j]["artist"];
 
-    let tempHtml_s = `<p>${j + 1}. ${song_name} - ${song_artist}</p>`;
+    let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-    $(`.playlist-block${index}`).append(tempHtml_s);
+    $(`.songs${index}`).append(tempHtml_s);
   }
   let spreadButtonHtml = `<button class="spread__button${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
   $(`.playlist-block${index}`).append(spreadButtonHtml);
