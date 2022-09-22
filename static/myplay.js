@@ -21,23 +21,23 @@ function showCreatePlaylistForm() {
 savePlaylistButton.addEventListener("click", savePlayList);
 
 function savePlayList() {
-  let userId = null;
+  let username = null;
   const cookies = document.cookie?.split("; ");
   for (let cookie of cookies) {
     const [name, value] = cookie.split("=");
     if (name === "userinfo") {
       userinfo = JSON.parse(value);
       for (let key in userinfo) {
-        if (key === "id") {
-          userId = userinfo[key];
+        if (key === "name") {
+          username = userinfo[key];
         }
       }
     }
   }
-
+  console.log(username);
   const title = playlistTitleInput.value;
   if (!title) return;
-  addPlaylist(title, userId);
+  addPlaylist(title, username);
   playlistTitleInput.value = "";
 }
 
