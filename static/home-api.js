@@ -3,7 +3,7 @@ let page = 1;
 $(document).ready(function () {
   $(".feed").html("");
   showAllplaylists(page);
-  showPopularlist()
+  showPopularlist();
 });
 
 let firstScroll = true;
@@ -42,7 +42,7 @@ function showAllplaylists(page) {
 }
 
 function showPopularlist() {
-  $("#popular-list").empty()
+  $("#popular-list").empty();
   $.ajax({
     type: "GET",
     url: "/list/popular",
@@ -50,21 +50,23 @@ function showPopularlist() {
     success: function (response) {
       console.log(response);
       if (response["result"] == "success") {
-        
-        popularList = response['popular_playlists'];
+        popularList = response["popular_playlists"];
         for (i = 0; i < popularList.length; i++) {
-          makePopularList(i+1, popularList[i]['songname'], popularList[i]['artist'])
-        } 
+          makePopularList(
+            i + 1,
+            popularList[i]["songname"],
+            popularList[i]["artist"]
+          );
+        }
       }
     },
   });
 }
 
 function makePopularList(index, songname, artist) {
-  let tempHtml =    `<p>${index}. ${songname} - ${artist}</p>`
+  let tempHtml = `<p>${index}. ${songname} - ${artist}</p>`;
   $("#popular-list").append(tempHtml);
 }
-
 
 function makeList(index, user, title, songs) {
   let tempHtml_pl = `<div class="playlist-block">
@@ -114,12 +116,14 @@ function makeList(index, user, title, songs) {
 
   if (!songs || songs.length === 0) return;
   for (let j = 0; j < 3; j++) {
-    let song_name = songs[j]["songname"];
-    let song_artist = songs[j]["artist"];
+    if (songs[j]) {
+      let song_name = songs[j]["songname"];
+      let song_artist = songs[j]["artist"];
 
-    let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
+      let tempHtml_s = `<li>${j + 1}. ${song_name} - ${song_artist}</li>`;
 
-    $(`.songs-${index}`).append(tempHtml_s);
+      $(`.songs-${index}`).append(tempHtml_s);
+    }
   }
   let spreadButtonHtml = `<button class="spread-button spread-button-${index}"><i class="fa-solid fa-caret-right"></i> 펼쳐보기 </button>`;
   $(`.playlist-block-${index}`).append(spreadButtonHtml);
