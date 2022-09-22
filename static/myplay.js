@@ -22,22 +22,20 @@ savePlaylistButton.addEventListener("click", savePlayList);
 
 function savePlayList() {
   let username = null;
+  let userid = null;
   const cookies = document.cookie?.split("; ");
   for (let cookie of cookies) {
     const [name, value] = cookie.split("=");
     if (name === "userinfo") {
       userinfo = JSON.parse(value);
-      for (let key in userinfo) {
-        if (key === "name") {
-          username = userinfo[key];
-        }
-      }
+      username = userinfo["name"];
+      userid = userinfo["id"];
     }
   }
-  console.log(username);
+  console.log(username, userid);
   const title = playlistTitleInput.value;
   if (!title) return;
-  addPlaylist(title, username);
+  addPlaylist(title, username, userid);
   playlistTitleInput.value = "";
 }
 

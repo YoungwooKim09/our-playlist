@@ -53,7 +53,7 @@
         {% for item in playlists %}
         <li>
           <div playlist-order="{{loop.index}}" class="playlist-block playlist-block-{{loop.index}}">
-            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.user}}</p>
+            <p class="area-title area-title {{ loop.index }}">{{item.title}} by {{item.username}}</p>
             <ul class="songs-{{loop.index}}">
               {% for song in item.songs %}
               {% if loop.index <= 3 %} <li>{{ loop.index }}. {{ song.songname }} - {{ song.artist }}

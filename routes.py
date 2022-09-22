@@ -13,6 +13,7 @@ db = client.testdb
 @app.route('/')
 def home():
     playlists = list(db.playlists.find({}, {'_id': 0}).limit(10))
+    print(playlists)
     return render_template('index.html', playlists = playlists)
 
 @app.route('/list/all', methods=['GET'])
@@ -39,8 +40,9 @@ def listPopularlists():
 def addPlaylist():
     title = request.form['title']
     user = request.form['user']
+    username = request.form['username']
 
-    playlist = {'user': user, 'title': title, 'songs' : [], 'created_at' : 0}
+    playlist = {'user': user, 'username': username, 'title': title, 'songs' : [], 'created_at' : 0}
     db.playlists.insert_one(playlist)
 
     return jsonify ({'result': 'success'})

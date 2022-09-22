@@ -31,7 +31,7 @@ function showAllplaylists(page) {
         for (let i = 0; i < all_playlists?.length; i++) {
           makeList(
             playlistIndex++,
-            all_playlists[i]["user"],
+            all_playlists[i]["username"],
             all_playlists[i]["title"],
             all_playlists[i]["songs"]
           );
